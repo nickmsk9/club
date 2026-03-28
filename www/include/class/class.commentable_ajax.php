@@ -3,7 +3,9 @@ if(!defined('IN_TRACKER'))
   die('Hacking attempt!');
 
 function commenttable_ajax($rows, $redaktor = "comment") {
-	global $CURUSER, $avatar_max_width,$memcache_obj,$DEFAULTBASEURL;
+	global $CURUSER, $avatar_max_width, $memcache_obj, $DEFAULTBASEURL;
+	$currentUserId = (isset($CURUSER) && is_array($CURUSER) && isset($CURUSER['id'])) ? (int)$CURUSER['id'] : 0;
+	$currentUserClass = $currentUserId > 0 ? get_user_class() : 0;
 
 	$count = 0;
 	foreach ($rows as $row)	{
@@ -68,13 +70,13 @@ function commenttable_ajax($rows, $redaktor = "comment") {
 		print("<td width=\"95%\" border=\"0px\" class=\"text\">");
 		print("$text</td></tr>\n");
 		print("<tr><td class=colhead align=\"center\" colspan=\"2\" border=\"0px\">");
-		print"<div style=\"float: left; width: auto;\">"
-			.($CURUSER ? " [<a href=\"javascript:;\" onClick=\"SE_CommentQuote('".$row['id']."','".$row['torrentid']."')\" class=\"altlink_white\">Цитата</a>]" : "")
-			.($row["user"] == $CURUSER["id"] || get_user_class() >= UC_MODERATOR ? " [<a href=\"javascript:;\" onClick=\"SE_EditComment('".$row['id']."','".$row['torrentid']."')\" class=\"altlink_white\">Изменить</a>]" : "")
-		    .(get_user_class() >= UC_MODERATOR ? " [<a href=\"javascript:;\" onClick=\"SE_DeleteComment('".$row['id']."','".$row['torrentid']."')\">Удалить</a>]" : "")
+		print "<div style=\"float: left; width: auto;\">"
+			.($currentUserId > 0 ? " [<a href=\"javascript:;\" onClick=\"SE_CommentQuote('".$row['id']."','".$row['torrentid']."')\" class=\"altlink_white\">Цитата</a>]" : "")
+			.(((int)$row["user"] === $currentUserId) || $currentUserClass >= UC_MODERATOR ? " [<a href=\"javascript:;\" onClick=\"SE_EditComment('".$row['id']."','".$row['torrentid']."')\" class=\"altlink_white\">Изменить</a>]" : "")
+		    .($currentUserClass >= UC_MODERATOR ? " [<a href=\"javascript:;\" onClick=\"SE_DeleteComment('".$row['id']."','".$row['torrentid']."')\">Удалить</a>]" : "")
 
-		    .($row["editedby"] && get_user_class() >= UC_MODERATOR ? " [<a href=\"javascript:;\"  onClick=\"SE_ViewOriginal('".$row['id']."','".$row['torrentid']."')\" class=\"altlink_white\">Оригинал</a>]" : "")
-		    .(get_user_class() >= UC_MODERATOR ? " IP: ".($row["ip"] ? "<a href=\"usersearch.php?ip=$row[ip]\" class=\"altlink_white\">".$row["ip"]."</a>" : "Неизвестен" ) : "")
+		    .(!empty($row["editedby"]) && $currentUserClass >= UC_MODERATOR ? " [<a href=\"javascript:;\"  onClick=\"SE_ViewOriginal('".$row['id']."','".$row['torrentid']."')\" class=\"altlink_white\">Оригинал</a>]" : "")
+		    .($currentUserClass >= UC_MODERATOR ? " IP: ".(!empty($row["ip"]) ? "<a href=\"usersearch.php?ip=$row[ip]\" class=\"altlink_white\">".$row["ip"]."</a>" : "Неизвестен") : "")
 		    ."</div>";
 
 		print("<div align=\"right\">Комментарий добавлен: ".display_date_time($row["added"])." </div></td></tr>");
