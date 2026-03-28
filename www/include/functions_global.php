@@ -189,20 +189,28 @@ break;
 
 function display_date_time($time) {
   global $CURUSER;
-  return gmdate("Y-m-d H:i:s", strtotime($time) + (($CURUSER["timezone"] + $CURUSER["dst"]) * 60));
+
+  $userTimezone = (isset($CURUSER) && is_array($CURUSER) && isset($CURUSER['timezone'])) ? (int)$CURUSER['timezone'] : 0;
+  $userDst = (isset($CURUSER) && is_array($CURUSER) && isset($CURUSER['dst'])) ? (int)$CURUSER['dst'] : 0;
+  $timestamp = strtotime($time);
+
+  if ($timestamp === false) {
+    return '';
+  }
+
+  return gmdate("Y-m-d H:i:s", $timestamp + (($userTimezone + $userDst) * 60));
 }
 // Returns the current time in GMT in MySQL compatible format.
 function get_date_time($timestamp = 0) {
-global $CURUSER;
 	if ($timestamp)
 		return date("Y-m-d H:i:s", $timestamp);
 	else
 		return date("Y-m-d H:i:s");
 }
 
-function cut_text ($txt, $car) {
-	while(strlen($txt) > $car) {
-	      return substr($txt, 0, $car) . "...";
+function cut_text($txt, $car) {
+	if (strlen($txt) > $car) {
+		return substr($txt, 0, $car) . "...";
 	}
 	return $txt;
 }
