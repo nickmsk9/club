@@ -25,18 +25,22 @@ if ($mem_get_d === false) {
     $mcache->cache_value('torrent_'.$id, $date, 0); } else  $row = $mem_get_d;
 
 sql_query("UPDATE LOW_PRIORITY torrents SET views = views + 1 WHERE id = $id");
-$owned = $moderator = 0;
-        if (get_user_class() >= UC_MODERATOR)
-                $owned = $moderator = 1;
-        elseif ($CURUSER["id"] == $row["owner"])
-                $owned = 1;
-		else $owned = 0;
+$owned = 0;
+$moderator = 0;
+$currentUserId = isset($CURUSER['id']) ? (int)$CURUSER['id'] : 0;
 
-if ($row["modded"] == "no" && $owned == "0")
+if ($currentUserId > 0 && get_user_class() >= UC_MODERATOR) {
+    $owned = 1;
+    $moderator = 1;
+} elseif ($currentUserId > 0 && isset($row['owner']) && $currentUserId === (int)$row['owner']) {
+    $owned = 1;
+}
+
+if (!empty($row) && isset($row["modded"]) && $row["modded"] === "no" && !$owned)
 stderr("Ошибка", "Раздача ожидает проверки");
   function hex_esc($matches) { return sprintf("%02x", ord($matches[0])); }
 		
-if (!$row || ($row["banned"] == "yes" && !$moderator)){
+if (!$row || (isset($row["banned"]) && $row["banned"] === "yes" && !$moderator)) {
 header("HTTP/1.0 404 Not Found"); 
 stderr($lang['error'], $lang['no_torrent_with_such_id']); 
 }
@@ -124,7 +128,9 @@ if ($CURUSER){
                         $url .= $addthis;
                         $keepget .= $addthis;
                 }
-				$datum = gmdate('Y-m-d H:i',$row['added'] + ($CURUSER["timezone"] + $CURUSER['dst']) * 60);      
+				$userTimezone = isset($CURUSER['timezone']) ? (int)$CURUSER['timezone'] : 0;
+				$userDst = isset($CURUSER['dst']) ? (int)$CURUSER['dst'] : 0;
+				$datum = gmdate('Y-m-d H:i', $row['added'] + ($userTimezone + $userDst) * 60);
 				$editlink = "<p class=\"download\"><a href=\"".$url."\" class=\"sublink\">";
 				$info = "<br /><b>".$lang['info_hash']."</b> - ". $row['info_hash']."
 				<br /><b>".$lang['size']."</b> - ". mksize($row["size"]) . " (" . number_format($row["size"]) . " ".$lang['bytes'].")
@@ -165,7 +171,7 @@ if ($CURUSER){
 				<br /><b>".$lang['added']."</b> - ". gmdate('Y-m-d H:i',$row['added'] )." <br> <b>Категория</b> - <a href='".$DEFAULTBASEURL."/browse/cat".$row["category"]."' title='".cat_name($row["category"],true)."'>".cat_name($row["category"],true)."</a><br />".$p."";
                 $s = "<b>" . $row["name"] . "</b>";
 				$s .= " ".$info."<br />";
-				$s .= "<h2>Что бы скачать этот торрент , Вам необходимо <a href=\"".$DEFAULBASEURL."/signup.php\"><b><u>ЗАРЕГИСТРИРОВАТЬСЯ</u></b></a> на сайте !</h2>";
+				$s .= "<h2>Что бы скачать этот торрент , Вам необходимо <a href=\"".$DEFAULTBASEURL."/signup.php\"><b><u>ЗАРЕГИСТРИРОВАТЬСЯ</u></b></a> на сайте !</h2>";
 				print ("<div style=\"float:left;\">
 				<div style=float:left;>$s</div>");
 			end_frame();
@@ -205,10 +211,10 @@ if ($CURUSER){
         include("include/rating_functions.php");
         include("include/secrets.php");
         echo "<div align='center' style='width:230px; margin:10px auto 0 auto; border:2px solid #e754a5; border-radius:7px; box-sizing:border-box;'>";
-        if (isset($CURUSER)) {
+        if ($currentUserId > 0) {
             echo pullRating($row["id"], true, false, true, null);
         } else {
-            echo pullRating($row["id"], true, true, true, 'novote');
+            echo '<div style="padding:10px; text-align:center;">Оценка доступна после авторизации</div>';
         }
         echo "</div>";
         echo "<div align='center' class=\"skidka\">";
@@ -281,13 +287,13 @@ print("</div>\n");
 print("</div>\n");
 
 $torrentid = $id;
-$user = (int)$CURUSER['id'];
+$user = $currentUserId;
 
 if ($CURUSER){
 
-list($tnx_count) = @mysqli_fetch_row(sql_query("SELECT COUNT(*) FROM thanks WHERE torrentid = $torrentid AND userid = $CURUSER[id] LIMIT 1")) or sqlerr(__FILE__,__LINE__);
+list($tnx_count) = @mysqli_fetch_row(sql_query("SELECT COUNT(*) FROM thanks WHERE torrentid = $torrentid AND userid = {$currentUserId} LIMIT 1")) or sqlerr(__FILE__,__LINE__);
 
-if ($row['owner'] == $CURUSER['id'] || $tnx_count != 0)
+if ((int)$row['owner'] === $currentUserId || $tnx_count != 0)
      $can_not_thanks = true;
 	 
 // Вывод кнопки голосования и ссылки на удаление голоса	 	 
