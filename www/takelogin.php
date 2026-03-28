@@ -9,14 +9,16 @@ function write_debug_log($message) {
 }
 
 // 1. Проверка данных формы
-if (!mkglobal("username:password")) {
-    write_debug_log("Ошибка: данные формы username/password отсутствуют.");
+$username = isset($_POST['username']) ? trim((string)$_POST['username']) : '';
+$username = preg_replace('/[\x00-\x1F\x7F]/u', '', $username);
+$password = isset($_POST['password']) ? (string)$_POST['password'] : '';
+
+if ($username === '' || $password === '') {
+    write_debug_log("Ошибка: данные формы username/password отсутствуют или пустые. POST=" . json_encode($_POST, JSON_UNESCAPED_UNICODE));
     die("Недопустимый запрос");
 }
 
 dbconn();
-$password = $_POST['password'];
-$username = $_POST['username'];
 
 function bark($text = "Имя пользователя или пароль неверны") {
     write_debug_log("Остановка авторизации: $text");
@@ -109,8 +111,10 @@ write_debug_log("Куки установлены: uid={$row['id']}, lang={$row['
 write_debug_log("Успешный вход: пользователь ID {$row['id']} ($username)");
 
 // 13. Редирект
-if (!empty($_POST["returnto"])) {
-    header("Location: $DEFAULTBASEURL/" . $_POST["returnto"]);
+$returnTo = isset($_POST['returnto']) ? ltrim((string)$_POST['returnto'], '/') : '';
+
+if ($returnTo !== '' && strpos($returnTo, '://') === false) {
+    header("Location: $DEFAULTBASEURL/" . $returnTo);
 } elseif (!empty($_SERVER['HTTP_REFERER'])) {
     header("Location:" . $_SERVER['HTTP_REFERER']);
 } else {
