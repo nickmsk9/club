@@ -1,0 +1,78 @@
+#tabs {
+    text-align: left;
+}
+
+#tabs .tab {
+    border: 1px solid #cecece;
+    padding: 5px 10px 5px 10px;
+    background:#ededed;
+    margin-right:5px;
+    line-height: 26px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+#tabs .active {
+    border-bottom: none;
+    padding-bottom: 6px;
+    background: #FAFAFA;
+    cursor: default;
+}
+
+#tabs #body {
+    border: 1px solid #cecece;
+    padding: 7px;
+    margin-bottom: 10px;
+    background: #FAFAFA;
+}
+
+#tabs .tab_error {
+    background:url(../pic/error.gif) repeat-y;
+    height: 34px;
+    line-height: 34px;
+    padding-left: 40px;
+}
+
+table.tt {
+    width: 100%;
+}
+
+table.tt td {
+    padding: 5px;
+}
+
+table.tt td.tt {
+    background-color: #777;
+    padding: 7px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+#torrent_container {
+    padding: 0px;
+    margin: 0px;
+}
+
+#torrent_container table.inlay td {
+    border: none;
+    padding: 5px;
+}
+
+#torrent_container table.inlay p {
+    margin:0px 0px 5px 0px;
+}
+
+#torrent_left {
+    width: 250px;
+    float: left;
+    padding: 0px;
+    margin: 0px;
+    margin-right: 10px;
+}
+
+#torrent_right {
+    width: auto;
+    padding: 0px;
+    margin-left: 260px;
+}

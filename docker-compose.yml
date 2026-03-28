@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: animeclub-app
+    volumes:
+      - ./www:/var/www/html
+    ports:
+      - "9000:9000"
+    depends_on:
+      - memcached
+      - db
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-animeclub
+    ports:
+      - "8080:80"
+    volumes:
+      - ./www:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: mysql-animeclub
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-animeclub
+    platform: linux/amd64
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8081:80"  # добавьте, чтобы открыть интерфейс
+
+  memcached:
+    image: memcached:latest
+    container_name: memcached-animeclub
+    ports:
+      - "11211:11211"
+
+volumes:
+  mysql-data:

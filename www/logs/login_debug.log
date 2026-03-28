@@ -1,0 +1,23 @@
+[2025-07-12 02:44:30] Пользователь найден в БД: ID 1
+[2025-07-12 02:44:30] IP: 192.168.97.1 | Статус: confirmed | Enabled: yes
+[2025-07-12 02:44:30] Ожидаемый passhash: 18efc4e509d0671fc6b3d27d54972f4e | Из базы: 18efc4e509d0671fc6b3d27d54972f4e
+[2025-07-12 02:44:30] Пиров: 0 | IP в БД: 192.168.97.1
+[2025-07-12 02:44:30] Старые куки удалены
+[2025-07-12 02:44:30] Старые куки удалены
+[2025-07-12 02:44:30] Куки установлены: uid=1, pass=9ffe742541cd97210d05230429412f2c, lang=russian, домен=localhost
+[2025-07-12 02:44:30] Заголовки: Array
+(
+    [0] => X-Powered-By: PHP/8.0.30
+    [1] => Set-Cookie: uid=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/
+    [2] => Set-Cookie: pass=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/
+    [3] => Set-Cookie: lang=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/
+    [4] => Set-Cookie: uid=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/; domain=localhost
+    [5] => Set-Cookie: pass=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/; domain=localhost
+    [6] => Set-Cookie: lang=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/; domain=localhost
+    [7] => Set-Cookie: uid=1; expires=Sun, 12-Jul-2026 02:44:30 GMT; Max-Age=31536000; path=/; domain=localhost
+    [8] => Set-Cookie: pass=9ffe742541cd97210d05230429412f2c; expires=Sun, 12-Jul-2026 02:44:30 GMT; Max-Age=31536000; path=/; domain=localhost
+    [9] => Set-Cookie: lang=russian; expires=Sun, 12-Jul-2026 02:44:30 GMT; Max-Age=31536000; path=/; domain=localhost
+)
+
+[2025-07-12 02:44:30] Куки установлены: uid=1, lang=russian
+[2025-07-12 02:44:30] Успешный вход: пользователь ID 1 (webnet)

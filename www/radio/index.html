@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+<link rel="shortcut icon" href="http://radio.ghostdubbers.ru/flashplayer/flash.ico">
+<script type="text/javascript" src="http://radio.ghostdubbers.ru/flashplayer/swfobject.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="CACHE-CONTROL" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title> AnimeClub.Lv -  AnimeRadio.su</title>
+<style type="text/css"> 
+body {
+	background-color: transparent;
+	font-family: verdana;
+	font-size: 10px;
+	margin:0px;
+	padding: 0px;
+	color: black;
+}
+</style>
+<script type="text/javascript" src="./rib/rib.js"></script>
+</head>
+<body>
+<script language="JavaScript" type="text/javascript">
+<!--
+RefreshRIB();
+//-->
+</script>
+<table border="1">
+<tr>
+ <td>
+	<!-- RIB START -->
+	<div id="rib_block" style="font-family: verdana; font-size: 10px; width:200px">
+	 <div style="text-align: center;"><img src="./rib/ajax-loader.gif" alt="loading data..." title="Загрузка блока...если в течении 20 секунд не загрузиться, включите javascript..." /></div>
+	</div>
+	<div style="font-family: verdana; font-size: 10px; padding-top: 10px;">
+	 Слушать в
+	 <a href="http://animeradio.su/playlists/gar.asx" target="_blank" title="Слушать в Windows Media Player"><img src="./rib/Windows-Media-Player-16x16.png" alt="Слушать в Windows Media Player" title="Слушать в Windows Media Player" border="0" width="16" height="16" /></a>
+
+	 <a href="#" onclick="window.open('http://animeradio.su/flashplayer/index.html', 'Player', 'Toolbar=0, Location=0, Directories=0, Status=1, Menubar=0, Scrollbars=0, Resizable=0, Copyhistory=0, Width=300, Height=100')" target="_self" title="Слушать радио прямо в браузере (FLASH)"><img src="./rib/Flash-8-16x16.png" alt="Слушать радио прямо в браузере (FLASH)" title="Слушать радио прямо в браузере (FLASH)" border="0" width="16" height="16" /></a> 
+
+	 <a href="http://animeradio.su/playlists/gar.pls" target="_blank" title="Слушать в Winamp, Foobar или в альтернативном плеере..."><img src="./rib/16x16px.png" alt="Слушать в Winamp, Foobar или в альтернативном плеере..." title="Слушать в Winamp, Foobar или в альтернативном плеере..." border="0" width="16" height="16" /></a><br />
+	<table cellspacing="0" cellpadding="0" border="0">
+		<tr>
+		 <td align="center">
+			<div id="player"></div>
+			<script type="text/javascript">
+			 var so = new SWFObject('http://radio.ghostdubbers.ru/flashplayer/mediaplayer.swf', 'live', '200', '20', '7');
+			 so.addVariable('height','20');
+			 so.addVariable('width','200');
+			 so.addVariable('type', 'mp3');
+			 so.addVariable('file','http://178.63.51.88:8000/;live.nsv');
+			 so.addVariable('searchbar','false');
+			 so.addVariable('showicons','false');
+			 so.addVariable('usefullscreen','false');
+			 so.addVariable('autostart','false');
+			 so.addVariable('volume','50');
+			 so.write('player');
+			</script>
+		 </td>
+		</tr>
+	</table>
+	 
+	</div>
+	<!-- RIB END -->
+
+ </td>
+</tr>
+</table>
+</body>
+</html>

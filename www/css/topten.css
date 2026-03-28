@@ -1,0 +1,20 @@
+table.tabs { background-color: transporent; border-collapse: collapse; border: 0px none; }
+table.tabs td { border: 0px none; font: bold 11px Arial; color: #57533C; white-space: nowrap; }
+table.tabs td a, table.tabs td a:visited { font-weight: bold; color: #57533C; text-decoration: none; }
+table.tabs td a:hover { color: #000000; }
+table.tabs td.active { background-image: url('../../pic/tabs/bg_active.gif'); background-color: #000000; color: #FFFFFF; }
+table.tabs td.notactive { background-image: url('../../pic/tabs/bg.gif'); color: #57533C; }
+table.tabs td.space { width: 100%; background-image: none; text-align: right; }
+
+table.ustats { border-collapse: separate; border: 1px solid #000000; }
+table.ustats td { white-space: nowrap; }
+table.ustats td.head { background-color: #000000; border: 1px solid #000000; font-weight: bold; font-size: 7pt; color: #FFFFFF; }
+table.ustats td.cell   { border: 0px none; border-bottom: 1px solid #DDDDDD; }
+table.ustats td.hhcell { background-color: #EEEEF8; border-top: 1px solid #6FDF1B; border-bottom: 1px solid #6FDF1B; border-left: 0px none; border-right: 0px none; color: #000000; }
+table.ustats td.hvcell { background-color: #EEEEF8; border-top: 0px none; border-bottom: 1px solid #DDDDDD; border-left: 1px solid #6FDF1B; border-right: 1px solid #6FDF1B; }
+table.ustats td.hccell { background-color: #6FDF1B; border-top: 1px solid #F8C71E; border-bottom: 1px solid #F8C71E; border-left: 1px solid #F8C71E; border-right: 1px solid #F8C71E; color: #000000; }
+table.ustats td.hhcell a, table.ustats td.hhcell a:visited, table.ustats td.hccell a, table.ustats td.hccell a:visited { font-weight: bold; color: #000000; text-decoration: none; }
+table.ustats td.hhcell a:hover, table.ustats td.hccell a:hover { color: #FF0000; }
+table.ustats td.foot { background-color: #F5F4EA; border: 1px solid #F5F4EA; text-align: right; color: #000000; }
+table.ustats td.foot a, table.ustats td.foot a:visited { font-weight: normal; color: #000000; text-decoration: underline; }
+table.ustats td.foot a:hover { color: #FF0000; }

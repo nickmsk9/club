@@ -1,0 +1,22 @@
+User-agent: *
+Disallow: /ad_min/
+Disallow: /blocks/
+Disallow: /cache/
+Disallow: /torrents/
+Disallow: /rssatom/
+Disallow: /go/
+Disallow: /download.php
+Disallow: /rss.php
+Disallow: /atom.php
+Disallow: /browse.php?sort*
+Disallow: /browse?sort*
+Disallow: /browse.php?tag*
+Disallow: /browsetag*
+Disallow: /browse?search*
+Disallow: /browse.php?search*
+Allow: /
+
+Host: animeclub.su
+Sitemap: http://animeclub.su/sitemap.xml
+Sitemap: http://animeclub.su/sitemap_forum.xml
+Sitemap: http://animeclub.su/sitemap_articles.xml

@@ -1,0 +1,31 @@
+#poll_container {
+	width : 100%;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+#poll_title {
+	font-size: 14px;
+	font-weight:bold;
+	border:none;
+	text-align:center;
+}
+.bar {
+    margin: 0;
+    border: none;
+    padding: 2px 2px;
+    color: #ffffff;
+    background-color: #d6d6d6; /* fallback */
+    background-image: -webkit-linear-gradient(left, #a8c4ff 0%, #4277ff 100%);
+    background-image: linear-gradient(to right, #a8c4ff 0%, #4277ff 100%);
+    text-decoration: none;
+    will-change: background-image;
+}
+.barmax {
+    margin: 0;
+    border: none;
+    padding: 2px 2px;
+    color: #ffffff;
+    background-color: #4277ff; /* fallback */
+    background-image: -webkit-linear-gradient(left, #b0d1ff 0%, #215aff 100%);
+    background-image: linear-gradient(to right, #b0d1ff 0%, #215aff 100%);
+    will-change: background-image;
+}

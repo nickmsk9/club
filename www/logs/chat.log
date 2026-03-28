@@ -1,0 +1,17 @@
+[2025-07-12 18:44:10] RAW input (hex): 284a100a06431150013d10
+[2025-07-12 18:44:10] RAW input (string): (J
+CP=
+[2025-07-12 18:44:10] After jSEND->getData():  *29* 
+[2025-07-12 18:44:10] After removing control chars:  *29* 
+[2025-07-12 18:44:10] After length limit (500 chars max):  *29* 
+[2025-07-12 18:44:10] After format_comment():   
+[2025-07-12 18:44:10] FINAL message for chat and DB:   
+[2025-07-12 18:44:10] Message inserted into DB.
+[2025-07-12 18:44:30] RAW input (hex): 544a2d1a4d3d36726923206874381c47424d717954606c37183e4c0263392457024232190d3d3611713c2964671745626708614c6c5e723a0b4c1a5223183c206f39551d0c3d373d3279243d6c3463321c0e06137953383e66341b0d3d35077110406230171a190e0672583e05043d103d10
+[2025-07-12 18:44:30] RAW input (string): TJ-M=6ri# ht8GBMqyT`l7>Lc9$WB2=6q<)dgEbgaLl^r:LR#< o9U=7=2y$=l4c2yS8>f4=5q@b0rX>==
+[2025-07-12 18:44:30] After jSEND->getData(): [img]https://upload.wikimedia.org/wikipedia/ru/b/bc/Poster_Inception_film_2010.jpg[/img]
+[2025-07-12 18:44:30] After removing control chars: [img]https://upload.wikimedia.org/wikipedia/ru/b/bc/Poster_Inception_film_2010.jpg[/img]
+[2025-07-12 18:44:30] After length limit (500 chars max): [img]https://upload.wikimedia.org/wikipedia/ru/b/bc/Poster_Inception_film_2010.jpg[/img]
+[2025-07-12 18:44:30] After format_comment(): 
+[2025-07-12 18:44:30] FINAL message for chat and DB: 
+[2025-07-12 18:44:30] Message inserted into DB.

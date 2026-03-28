@@ -1,0 +1,40 @@
+<?
+$lang['block_rel'] = 'Jaunumi';
+$lang['comment'] = 'Kommentāri : ';
+$lang['readfull'] = 'Lasīt tālāk ...';
+$lang['downlaod'] = 'Lejuplādēt';
+$lang['uped'] = 'Augšuplādēja: ';
+$lang['size'] = 'Failu apjoms: ';
+$lang['seederz'] = 'Seedo: ';
+$lang['leecherz'] = 'Tagat lejuplādē: ';
+$lang['downloaded'] = 'Lejuplādēja: ';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+
+?>

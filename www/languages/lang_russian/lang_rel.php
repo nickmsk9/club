@@ -1,0 +1,40 @@
+<?
+$lang['block_rel'] = 'Новинки';
+$lang['comment'] = 'Комментарии : ';
+$lang['readfull'] = 'Читать далее ...';
+$lang['downlaod'] = 'Скачать';
+$lang['uped'] = 'Раздал: ';
+$lang['size'] = 'Размер: ';
+$lang['seederz'] = 'Раздают: ';
+$lang['leecherz'] = 'Качают: ';
+$lang['downloaded'] = 'Скачан: ';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+
+?>

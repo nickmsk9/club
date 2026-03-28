@@ -1,0 +1,56 @@
+
+        /* The poller box */
+.poller{
+padding:5px;
+background-image:url(question.gif);
+background-repeat:no-repeat;
+background-position: center center;
+margin:5px;
+font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+}
+/* Poller title above radio buttons */
+.pollerTitle{
+margin-bottom:5px;
+font-weight:bold;
+}
+/* Label for each radio button */
+.pollerOption{
+margin:0px;
+}
+/* Label for each option above graph - i.e. results */
+.result_pollerOption{
+margin:0px;
+}
+/* Title of poller - when ajax shows the results */
+.result_pollerTitle{
+margin-bottom:5px;
+font-weight:bold;
+}
+/* Don't change this one, it is used to get the left and right image(the corner) positioned correctly */
+.result_pollGraph img{
+float:left;
+}
+/* The <div> tag where the percentage result is shown */
+.result_pollGraph div{
+float:left;
+height:16px;
+background-repeat:repeat-x;
+color:#FFF;
+line-height:16px;
+}
+/* Graph div - parent of both the corner images and the div displaying percentage votes */
+.result_pollGraph{
+height:16px;
+}
+
+/* Message when Ajax is working getting restults fromt the server */
+.poller_waitMessage{
+display:none;
+}
+
+.result_totalVotes{
+clear:both;
+margin-top:10px;
+font-style:italic;
+}
+

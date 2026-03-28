@@ -1,0 +1,289 @@
+
+h3,h4
+{
+padding:0px;
+margin:0px;
+}
+a
+{
+color:#3B5998;
+text-decoration:none;
+}
+a:hover
+{
+text-decoration:underline;
+}
+#wall_container
+{
+text-align:left;
+background-color:#FFFFFF;
+margin:60px;
+
+}
+
+.imgpreview
+{
+border:solid 1px #333;
+max-width:130px;
+max-height:125px;
+margin-bottom:10px;
+margin-right:10px;
+}
+.preview
+{
+border:solid 1px #333;
+max-width:150px;
+max-height:125px;
+margin-bottom:10px;
+margin-left:10px;
+}
+.webcam_preview
+{
+width:103px;
+margin:0px 3px 3px 0px;
+}
+#webcam{  float:left; width:320px;height:240px;border:solid 1px #333;margin-right:5px }
+#webcam_preview {float:left; width:230px;height:240px; }
+#webcam_status,#webcam_takesnap
+{
+width:100%;clear:both;padding-top:5px
+}
+#content
+{
+margin-top:10px;
+
+}
+#updateboxarea
+{
+padding:10px;
+}
+#update
+{
+border:solid 1px #BDC7D8;
+height:50px;
+width:100%;
+font-size:13px;
+font-family:Arial, Helvetica, sans-serif;
+padding:5px;
+}
+.comment
+{
+border:solid 1px #BDC7D8;
+font-family:Arial, Helvetica, sans-serif;
+}
+#update_button
+{
+	background-color:#3B5998;
+	color:#FFF;
+	font-weight:bold;
+	padding:5px;
+	border:solid 1px #333;
+	margin-top:10px;
+	cursor:pointer;
+	
+}
+#imageupload
+{
+overflow:auto; padding:10px;width:560px; font-size:11px;display:none;
+}
+#webcam_container
+{
+overflow:auto; padding:10px;width:560px; font-size:11px;display:none;
+}
+
+.border
+{
+border-left:solid 1px #BDC7D8;border-right:solid 1px #BDC7D8;border-bottom:solid 1px #BDC7D8; 
+
+}
+/* status body */
+
+.stbody
+{
+padding:10px;
+border-bottom:solid 1px #dedede;
+overflow:auto;
+background-color: #ffffff;
+}
+.stimg
+{
+float:left;
+height:50px;
+width:50px;
+border:solid 1px #dedede;
+padding:3px;
+}
+.sttext
+{
+margin-left:70px;
+min-height:50px;
+word-wrap:break-word;
+overflow:hidden;
+padding:5px;
+display:block;
+font-size:12px;
+
+}
+.sttext b
+{
+color:#006699;
+}
+
+.sttime
+{
+font-size:11px;
+color:#999;
+font-family:Arial, Helvetica, sans-serif;
+margin-top:5px;
+}
+.stdelete 
+{
+font-weight:bold;
+float:right;
+cursor:pointer;
+background:url(../icons/trashdull.png);
+display: none;
+height:20px;
+width:20px;
+}
+.stbody:hover .stdelete{
+display : block;
+}
+.stdelete:hover
+{
+background:url(../icons/trash.png);
+}
+#stexpandbox
+{
+margin-top:10px;
+}
+#stexpandbox img
+{
+border:solid 1px #dedede;
+padding:3px;
+}
+/* Comment */
+.comment_ui,
+.stcommentbody
+{
+border-bottom:solid 2px #fff;
+background-color:#EDEFF4;
+padding:5px;
+width:500px;
+overflow:auto;
+}
+.stcommentimg
+{
+float:left;
+height:35px;
+width:35px;
+border:solid 1px #dedede;
+padding:2px;
+}
+.stcommenttext 
+{
+margin-left: 45px;
+min-height: 40px;
+word-wrap: break-word;
+overflow: hidden;
+padding: 3px;
+display: block;
+font-size: 11px;
+width: 440px;
+}
+.stcommenttext b
+{
+color:#006699;
+}
+
+.stcommenttime
+{
+font-size:11px;
+color:#999;
+font-family:Arial, Helvetica, sans-serif;
+margin-top:5px;
+}
+.stcommentdelete 
+{
+font-weight:bold;
+float:right;
+cursor:pointer;
+display:none;
+background:url(../icons/trashdull.png);
+height:20px;
+width:20px; 
+}
+.stcommenttext:hover .stcommentdelete
+{
+display:block
+}
+.stcommentdelete:hover
+{
+background:url(../icons/trash.png);
+}
+
+.commentupdate
+{
+background-color:#f2f2f2;
+width:400px;
+padding:5px;
+}
+.comment
+{
+width:330px;
+height:35px;
+font-size:11px;
+}
+/* faceb image*/
+.small_face
+{
+width:35px;height:35px
+}
+.big_face
+{
+width:50px;height:50px
+}
+#flashmessage
+{
+height:15px;
+margin-top:10px;
+font-size:11px;
+color:#333;
+
+}
+.morebox
+{
+font-weight:bold;
+color:#333333;
+text-align:center;
+border:solid 1px #333333;
+
+margin-top:8px;
+margin-bottom:8px;
+display:block;
+font-size:13px;
+width:100%;
+
+}
+.morebox a{text-decoration:none; padding:8px;  display:block}
+.morebox a:hover{ text-decoration:none; background-color:#dedede}
+.button
+{
+background-color:#6D84B4;
+padding:5px;
+color:#fff;
+font-weight:bold;
+border:solid 1px #333;
+font-size:11px;
+font-family:Arial, Helvetica, sans-serif;
+cursor:pointer;
+}
+#addphoto
+{
+font-weight:bold;
+}
+#camera_error
+{
+text-align:center;
+margin-top:80px;
+}

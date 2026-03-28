@@ -1,0 +1,16 @@
+[2025-07-12 02:44:25] Разлогинивание IP: 192.168.97.1 | Домены перебраны: , localhost:8080, localhost, 127.0.0.1, animeclub.local
+Оставшиеся куки после удаления:
+Array
+(
+    [PHPSESSID] => 81baff532df0ef80ee0dfc64140e3a9e
+    [browsemode] => simple
+    [has_voted_1] => 1
+    [pma_lang] => ru
+    [_ym_d] => 1746250708
+    [_ym_uid] => 1746250708936548709
+)
+Сессия после уничтожения:
+Array
+(
+)
+
