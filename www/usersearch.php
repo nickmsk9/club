@@ -845,7 +845,7 @@ $disabled = htmlspecialchars($dip_param);
 //    </temporary>   /////////////////////////////////////////////////////
 
   $res = sql_query($queryc) or sqlerr(__FILE__, __LINE__);
-  $arr = mysql_fetch_row($res);
+  $arr = mysqli_fetch_row($res);
   $count = $arr[0];
 
   $q = isset($q)?($q."&amp;"):"";
@@ -858,7 +858,7 @@ $disabled = htmlspecialchars($dip_param);
 
   $res = sql_query($query) or sqlerr(__FILE__, __LINE__);
 
-  if (mysql_num_rows($res) == 0)
+  if (mysqli_num_rows($res) == 0)
   	stdmsg("Внимание","Пользователь не был найден.");
   else
   {
@@ -877,7 +877,7 @@ $disabled = htmlspecialchars($dip_param);
         "<td class=colhead>pUL</td>".
         "<td class=colhead>pDL</td>".
         "<td class=colhead>История</td></tr>";
-    while ($user = mysql_fetch_array($res))
+    while ($user = mysqli_fetch_assoc($res))
     {
     	if ($user['added'] == '0000-00-00 00:00:00')
       	$user['added'] = '---';
@@ -888,7 +888,7 @@ $disabled = htmlspecialchars($dip_param);
       {
 	    	$nip = ip2long($user['ip']);
         $auxres = sql_query("SELECT COUNT(*) FROM bans WHERE $nip >= first AND $nip <= last") or sqlerr(__FILE__, __LINE__);
-        $array = mysql_fetch_row($auxres);
+        $array = mysqli_fetch_row($auxres);
     	  if ($array[0] == 0)
       		$ipstr = $user['ip'];
 	  	  else
@@ -898,17 +898,15 @@ $disabled = htmlspecialchars($dip_param);
       	$ipstr = "---";
 
       $auxres = sql_query("SELECT SUM(uploaded) AS pul, SUM(downloaded) AS pdl FROM peers WHERE userid = " . $user['id']) or sqlerr(__FILE__, __LINE__);
-      $array = mysql_fetch_array($auxres);
+      $array = mysqli_fetch_assoc($auxres);
 
       $pul = $array['pul'];
       $pdl = $array['pdl'];
 
-      $n_posts = $n[0];
-
       $auxres = sql_query("SELECT COUNT(id) FROM comments WHERE user = ".$user['id']) or sqlerr(__FILE__, __LINE__);
 			// Use LEFT JOIN to exclude orphan comments
       // $auxres = sql_query("SELECT COUNT(c.id) FROM comments AS c LEFT JOIN torrents as t ON c.torrent = t.id WHERE c.user = '".$user['id']."'") or sqlerr(__FILE__, __LINE__);
-      $n = mysql_fetch_row($auxres);
+      $n = mysqli_fetch_row($auxres);
       $n_comments = $n[0];
 
     	echo "<tr><td><b><a href='user/id" . $user['id'] . "'>" .
