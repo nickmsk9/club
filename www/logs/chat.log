@@ -14,3 +14,75 @@
 [2026-03-29 06:13:03] After format_comment(): приветик
 [2026-03-29 06:13:03] FINAL message for chat and DB: приветик
 [2026-03-29 06:13:03] Message inserted into DB.
+[2026-03-29 06:14:43] RAW input (hex): 2a3230342a
+[2026-03-29 06:14:43] RAW input (string): *204*
+[2026-03-29 06:14:43] After direct UTF-8 read: *204*
+[2026-03-29 06:14:43] After removing control chars: *204*
+[2026-03-29 06:14:43] After length limit (500 chars max): *204*
+[2026-03-29 06:14:43] After format_comment(): 
+[2026-03-29 06:14:43] FINAL message for chat and DB: 
+[2026-03-29 06:14:43] Message inserted into DB.
+[2026-03-29 06:14:46] RAW input (hex): d0b2d0b0d18b
+[2026-03-29 06:14:46] RAW input (string): ваы
+[2026-03-29 06:14:46] After direct UTF-8 read: ваы
+[2026-03-29 06:14:46] After removing control chars: ваы
+[2026-03-29 06:14:46] After length limit (500 chars max): ваы
+[2026-03-29 06:14:46] After format_comment(): ваы
+[2026-03-29 06:14:46] FINAL message for chat and DB: ваы
+[2026-03-29 06:14:46] Message inserted into DB.
+[2026-03-29 06:14:46] RAW input (hex): d18bd0b2d0b0d18b
+[2026-03-29 06:14:46] RAW input (string): ываы
+[2026-03-29 06:14:46] After direct UTF-8 read: ываы
+[2026-03-29 06:14:46] After removing control chars: ываы
+[2026-03-29 06:14:46] After length limit (500 chars max): ываы
+[2026-03-29 06:14:46] After format_comment(): ываы
+[2026-03-29 06:14:46] FINAL message for chat and DB: ываы
+[2026-03-29 06:14:46] Message inserted into DB.
+[2026-03-29 06:14:46] RAW input (hex): d0b2d0b0d18b
+[2026-03-29 06:14:46] RAW input (string): ваы
+[2026-03-29 06:14:46] After direct UTF-8 read: ваы
+[2026-03-29 06:14:46] After removing control chars: ваы
+[2026-03-29 06:14:46] After length limit (500 chars max): ваы
+[2026-03-29 06:14:46] After format_comment(): ваы
+[2026-03-29 06:14:46] FINAL message for chat and DB: ваы
+[2026-03-29 06:14:46] Message inserted into DB.
+[2026-03-29 06:14:46] RAW input (hex): d0b0
+[2026-03-29 06:14:46] RAW input (string): а
+[2026-03-29 06:14:46] After direct UTF-8 read: а
+[2026-03-29 06:14:46] After removing control chars: а
+[2026-03-29 06:14:46] After length limit (500 chars max): а
+[2026-03-29 06:14:46] After format_comment(): а
+[2026-03-29 06:14:46] FINAL message for chat and DB: а
+[2026-03-29 06:14:46] Message inserted into DB.
+[2026-03-29 06:14:46] RAW input (hex): d18bd0b2
+[2026-03-29 06:14:46] RAW input (string): ыв
+[2026-03-29 06:14:46] After direct UTF-8 read: ыв
+[2026-03-29 06:14:46] After removing control chars: ыв
+[2026-03-29 06:14:46] After length limit (500 chars max): ыв
+[2026-03-29 06:14:46] After format_comment(): ыв
+[2026-03-29 06:14:46] FINAL message for chat and DB: ыв
+[2026-03-29 06:14:46] Message inserted into DB.
+[2026-03-29 06:14:48] RAW input (hex): d0b0d18bd0b2d184
+[2026-03-29 06:14:48] RAW input (string): аывф
+[2026-03-29 06:14:48] After direct UTF-8 read: аывф
+[2026-03-29 06:14:48] After removing control chars: аывф
+[2026-03-29 06:14:48] After length limit (500 chars max): аывф
+[2026-03-29 06:14:48] After format_comment(): аывф
+[2026-03-29 06:14:48] FINAL message for chat and DB: аывф
+[2026-03-29 06:14:48] Message inserted into DB.
+[2026-03-29 06:14:50] RAW input (hex): d180d0b0d0b1d0bed0b0d182d0b5d1823f
+[2026-03-29 06:14:50] RAW input (string): рабоатет?
+[2026-03-29 06:14:50] After direct UTF-8 read: рабоатет?
+[2026-03-29 06:14:50] After removing control chars: рабоатет?
+[2026-03-29 06:14:50] After length limit (500 chars max): рабоатет?
+[2026-03-29 06:14:50] After format_comment(): рабоатет?
+[2026-03-29 06:14:50] FINAL message for chat and DB: рабоатет?
+[2026-03-29 06:14:50] Message inserted into DB.
+[2026-03-29 06:14:51] RAW input (hex): d183d180d0b021
+[2026-03-29 06:14:51] RAW input (string): ура!
+[2026-03-29 06:14:51] After direct UTF-8 read: ура!
+[2026-03-29 06:14:51] After removing control chars: ура!
+[2026-03-29 06:14:51] After length limit (500 chars max): ура!
+[2026-03-29 06:14:51] After format_comment(): ура!
+[2026-03-29 06:14:51] FINAL message for chat and DB: ура!
+[2026-03-29 06:14:51] Message inserted into DB.
