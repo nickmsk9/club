@@ -2,7 +2,6 @@
 
 require_once("include/bittorrent.php");
 require_once("include/functions_global.php");
-require_once("include/class/jsend.class.php");
 require_once("include/class/class.memchat.php");
 $logFile = __DIR__ . '/logs/chat.log';  // <--- добавь сюда путь к логу
 // Подключение к БД и gzip
@@ -41,7 +40,6 @@ if (!$connected) {
     die("Не удалось подключиться к Memcached по ни одному из адресов: " . implode(', ', $default_hosts));
 }
 
-$jSEND = new jSEND();
 $keep_messages = 25;
 $chat = new mc_chat($mc, '2', $keep_messages);
 
@@ -66,17 +64,28 @@ if ($action === 'add') {
     chat_log("RAW input (hex): " . bin2hex($rawText));
     chat_log("RAW input (string): " . $rawText);
 
-    // Декодируем с помощью jSEND
-    $decodedText = $jSEND->getData($rawText);
-    chat_log("After jSEND->getData(): " . $decodedText);
+    // Читаем текст как обычный UTF-8 POST без legacy jSEND
+    $decodedText = trim((string)$rawText);
+    chat_log("After direct UTF-8 read: " . $decodedText);
 
-    // Удаляем управляющие символы (кроме перевода строки)
+    // На всякий случай убираем некорректную UTF-8, если она прилетела
+    if (!mb_check_encoding($decodedText, 'UTF-8')) {
+        $decodedText = mb_convert_encoding($decodedText, 'UTF-8', 'UTF-8, Windows-1251, ISO-8859-1');
+        chat_log("After mb_convert_encoding fallback: " . $decodedText);
+    }
+
+    // Удаляем управляющие символы (кроме перевода строки и таба)
     $decodedText = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $decodedText);
     chat_log("After removing control chars: " . $decodedText);
 
-    // Ограничиваем длину сообщения, например, 500 символов
-    $decodedText = mb_substr($decodedText, 0, 500);
+    // Ограничиваем длину сообщения
+    $decodedText = mb_substr($decodedText, 0, 500, 'UTF-8');
     chat_log("After length limit (500 chars max): " . $decodedText);
+
+    if ($decodedText === '') {
+        chat_log("Empty message after normalization, skip insert.");
+        exit;
+    }
 
     // Убираем [img] теги для слабых классов
     if (get_user_class() < UC_SPOWER) {
@@ -109,8 +118,15 @@ if ($action === 'add') {
 
     // Добавление в memcached
     $chat->add(
-        $userData['user'], $userData['username'], $userData['class'], $userData['warned'],
-        $userData['donor'], $userData['gender'], $userData['parked'], $userData['message'], $userData['time']
+        $userData['user'],
+        $userData['username'],
+        $userData['class'],
+        $userData['warned'],
+        $userData['donor'],
+        $userData['gender'],
+        $userData['parked'],
+        $userData['message'],
+        $userData['time']
     );
 
     // Добавление в базу
@@ -193,6 +209,6 @@ foreach ($msg as $arr) {
 }
 
 $html .= "</table>";
-$mc->set("chat_html_cache", $html, 1); // кешируем на 3 секунды
+$mc->set("chat_html_cache", $html, 0); // кешируем на 3 секунды
 
 echo $html;

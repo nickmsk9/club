@@ -3,8 +3,7 @@
  */
 (function($) {
     $(function() {
-        var $tabs    = $('.tab'),
-            $body    = $('#body'),
+        var $body    = $('#body'),
             $loading = $('#loading'),
             user     = $body.attr('user') || '';
 
@@ -34,8 +33,8 @@
         // Load a given tab by its act code
         function loadTab(act) {
             // Highlight active tab
-            $tabs.removeClass('active');
-            $tabs.filter('#' + act).addClass('active');
+            $('.tab').removeClass('active');
+            $('.tab#' + act).addClass('active');
 
             // Show loading spinner
             $loading.html(loadingHtml);
@@ -60,7 +59,7 @@
         }
 
         // Bind click on tabs
-        $tabs.on('click', function(e) {
+        $(document).on('click', '.tab', function(e) {
             e.preventDefault();
             var act = this.id;
             if (!$(this).hasClass('active')) {
@@ -69,9 +68,11 @@
         });
 
         // Initialize: load current or default tab
-        var $init = $tabs.filter('.active');
+        var $tabs = $('.tab'),
+            $init = $('.tab.active');
+
         if ($init.length) {
-            loadTab($init.attr('id'));
+            loadTab($init.first().attr('id'));
         } else if ($tabs.length) {
             loadTab($tabs.first().attr('id'));
         }

@@ -174,7 +174,6 @@ if ($countryarr === false) {
 stdhead("Просмотр профиля " . $user["username"]);
 begin_main_frame();
 print("<link rel=\"stylesheet\" href=\"".$DEFAULTBASEURL."/css/user.css\" type=\"text/css\">\n");
-print("<script language=\"JavaScript\" src=\"".$DEFAULTBASEURL."/js/user.js\" type=\"text/javascript\"></script>\n");
 print("<div id=\"profile_container\">");
 print("<div id=\"profile_left\">");
 
@@ -381,7 +380,7 @@ print("<span class=\"tab\" id=\"uploading\">Сейчас раздает</span>\n
 if($CURUSER['id'] == $id OR get_user_class() == UC_SYSOP)
 //print("<span class=\"tab\" id=\"guests\">Гости профиля</span>\n");
 print("<span id=\"loading\"></span>\n");
-print("<div id=\"body\" user=\"$id\">\n");
+print("<div id=\"user_tab_body\" data-user=\"$id\">\n");
 if (empty($user['info']))
     print("<div class=\"tab_error\">Пользователь не сообщил эту информацию.</div>\n");
 else {
@@ -392,6 +391,7 @@ else {
 }
 print("</div>\n");
 print("</div>\n");
+print("<script src=\"".$DEFAULTBASEURL."/js/user.js?v=3\" type=\"text/javascript\"></script>\n");
 
 print(
   visitorsList("
