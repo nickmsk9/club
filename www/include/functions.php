@@ -565,15 +565,22 @@ function genbark($x,$y) {
 }
 
 function mksecret($length = 20) {
-    $set = array("a","A","b","B","c","C","d","D","e","E","f","F","g","G","h","H","i","I","j","J","k","K","l","L","m","M","n","N","o","O","p","P","q","Q","r","R","s","S","t","T","u","U","v","V","w","W","x","X","y","Y","z","Z","1","2","3","4","5","6","7","8","9");
-    $str;
-    for($i = 1; $i <= $length; $i++)
-    {
-        $ch = rand(0, count($set)-1);
-        if (!isset($str)) $str = "";
-        $str .= $set[$ch];
+    $length = (int)$length;
+    if ($length <= 0) {
+        return '';
     }
-    return $str;
+
+    static $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
+    static $alphabetLength = 61;
+
+    $secret = '';
+    $bytes = random_bytes($length);
+
+    for ($i = 0; $i < $length; $i++) {
+        $secret .= $alphabet[ord($bytes[$i]) % $alphabetLength];
+    }
+
+    return $secret;
 }
 
 function httperr($code = 404) {
