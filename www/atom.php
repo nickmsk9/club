@@ -3,9 +3,7 @@
 require_once("include/bittorrent.php");
 require_once("include/functions_global.php");
 require_once("include/class/class.memchat.php");
-if (is_file(__DIR__ . "/include/class/jsend.class.php")) {
-    require_once(__DIR__ . "/include/class/jsend.class.php");
-}
+// legacy jSEND больше не используем, чат работает через обычный UTF-8 POST
 $logFile = __DIR__ . '/logs/chat.log';  // <--- добавь сюда путь к логу
 // Подключение к БД и gzip
 gzip();
@@ -45,7 +43,6 @@ if (!$connected) {
 
 $keep_messages = 25;
 $chat = new mc_chat($mc, '2', $keep_messages);
-$jSEND = class_exists('jSEND') ? new jSEND() : null;
 
 header("Content-Type: text/html; charset=utf-8");
 
@@ -68,21 +65,11 @@ if ($action === 'add') {
     chat_log("RAW input (hex): " . bin2hex($rawText));
     chat_log("RAW input (string): " . $rawText);
 
-    // По умолчанию читаем текст как обычный UTF-8 POST
+    // Читаем сообщение как обычный UTF-8 POST без legacy jSEND
     $decodedText = trim((string)$rawText);
     chat_log("After direct UTF-8 read: " . $decodedText);
 
-    // Если пришёл старый jSEND-пакет с управляющими символами, пробуем декодировать legacy-формат
-    $looksLikeLegacyJsend = (bool)preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F]/', $rawText);
-    if ($looksLikeLegacyJsend && $jSEND) {
-        $legacyDecoded = $jSEND->getData($rawText);
-        if (is_string($legacyDecoded) && $legacyDecoded !== '') {
-            $decodedText = trim($legacyDecoded);
-            chat_log("After legacy jSEND decode: " . $decodedText);
-        }
-    }
-
-    // На всякий случай исправляем битую кодировку, если mbstring доступен
+    // Если строка пришла не в UTF-8, пробуем мягко привести кодировку
     if (function_exists('mb_check_encoding') && !mb_check_encoding($decodedText, 'UTF-8')) {
         if (function_exists('mb_convert_encoding')) {
             $decodedText = mb_convert_encoding($decodedText, 'UTF-8', 'UTF-8, Windows-1251, ISO-8859-1');
@@ -90,7 +77,7 @@ if ($action === 'add') {
         }
     }
 
-    // Удаляем управляющие символы (кроме перевода строки и таба)
+    // Удаляем управляющие символы
     $decodedText = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $decodedText);
     chat_log("After removing control chars: " . $decodedText);
 
@@ -186,7 +173,7 @@ if ($CURUSER['chat_ban'] === 'yes') {
 
 // Попробуем достать HTML из кеша
 $cached_html = $mc->get("chat_html_cache");
-if ($cached_html) {
+if ($action === '' && $cached_html !== false && $cached_html !== null && $cached_html !== '') {
     echo $cached_html;
     exit;
 }

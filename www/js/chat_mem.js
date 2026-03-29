@@ -1,61 +1,64 @@
 var loading = "<img src=\"pic/upload.gif\" alt=\"Загрузка..\" />";
-jQuery(function($) {
-    var chatParams = $.extend({ refresh: 5 }, window.params || {});
+
+jQuery(function () {
+    var chatParams = jQuery.extend({ refresh: 5 }, window.params || {});
     var isReading = false;
 
-    $("#shbox").on("submit", function(e) {
-        e.preventDefault();
+    jQuery("#shbox").submit(function (e) {
+        if (e && e.preventDefault) {
+            e.preventDefault();
+        }
 
-        var $form = $(this);
-        var $text = $("#text");
+        var $form = jQuery(this);
+        var $text = jQuery("#text");
         var rawData = $text.val();
-        var data = $.trim(rawData);
+        var data = jQuery.trim(rawData);
 
         if (data === '') {
             alert('Ошибка. Пустое сообщение.');
-            $text.prop('disabled', false).focus();
-            $('input[type=submit]', $form).prop('disabled', false);
+            $text.removeAttr("disabled").focus();
+            jQuery('input[type=submit]', $form).removeAttr('disabled');
             return false;
         }
 
-        $text.prop('disabled', true);
-        $('input[type=submit]', $form).prop('disabled', true);
-        $("#loading-chat").html(loading);
+        $text.attr('disabled', 'disabled');
+        jQuery('input[type=submit]', $form).attr('disabled', 'disabled');
+        jQuery("#loading-chat").html(loading);
 
-        $.ajax({
+        jQuery.ajax({
             url: "atom.php",
             type: "POST",
             cache: false,
             dataType: "html",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             data: {
                 text: data,
                 action: "add"
             },
-            success: function(response) {
-                $("#shout").html(response);
+            success: function (response) {
+                jQuery("#shout").html(response);
                 $text.val('');
             },
-            error: function() {
-                alert('Ошибка отправки сообщения.');
+            error: function (xhr) {
+                alert('Ошибка отправки сообщения: ' + xhr.status);
             },
-            complete: function() {
-                $("#loading-chat").empty();
-                $text.prop('disabled', false).focus();
-                $('input[type=submit]', $form).prop('disabled', false);
+            complete: function () {
+                jQuery("#loading-chat").empty();
+                $text.removeAttr("disabled").focus();
+                jQuery('input[type=submit]', $form).removeAttr('disabled');
             }
         });
 
         return false;
     });
 
-    $(document).on("click", ".delmess", function() {
-        var messid = $(this).attr("id");
-        $("#loading-chat").html(loading);
+    jQuery(".delmess").live("click", function () {
+        var messid = jQuery(this).attr("id");
+        var tid = jQuery(this).attr("tid") || '';
+        jQuery("#loading-chat").html(loading);
 
-        $.post("atom.php", { id: messid, action: "delete" }, function(response) {
-            $("#shout").html(response);
-            $("#loading-chat").empty();
+        jQuery.post("atom.php", { id: messid, tid: tid, action: "delete" }, function (response) {
+            jQuery("#shout").html(response);
+            jQuery("#loading-chat").empty();
         });
     });
 
@@ -66,18 +69,18 @@ jQuery(function($) {
         }
 
         isReading = true;
-        $("#loading-chat").html(loading);
+        jQuery("#loading-chat").html(loading);
 
-        $.ajax({
+        jQuery.ajax({
             url: "atom.php",
             type: "GET",
             cache: false,
             dataType: "html",
-            success: function(response) {
-                $("#shout").html(response);
+            success: function (response) {
+                jQuery("#shout").html(response);
             },
-            complete: function() {
-                $("#loading-chat").empty();
+            complete: function () {
+                jQuery("#loading-chat").empty();
                 isReading = false;
                 setTimeout(readMessages, chatParams.refresh * 2000);
             }

@@ -1,97 +1,16 @@
-[2025-07-12 18:44:10] RAW input (hex): 284a100a06431150013d10
-[2025-07-12 18:44:10] RAW input (string): (J
-CP=
-[2025-07-12 18:44:10] After jSEND->getData():  *29* 
-[2025-07-12 18:44:10] After removing control chars:  *29* 
-[2025-07-12 18:44:10] After length limit (500 chars max):  *29* 
-[2025-07-12 18:44:10] After format_comment():   
-[2025-07-12 18:44:10] FINAL message for chat and DB:   
-[2025-07-12 18:44:10] Message inserted into DB.
-[2025-07-12 18:44:30] RAW input (hex): 544a2d1a4d3d36726923206874381c47424d717954606c37183e4c0263392457024232190d3d3611713c2964671745626708614c6c5e723a0b4c1a5223183c206f39551d0c3d373d3279243d6c3463321c0e06137953383e66341b0d3d35077110406230171a190e0672583e05043d103d10
-[2025-07-12 18:44:30] RAW input (string): TJ-M=6ri# ht8GBMqyT`l7>Lc9$WB2=6q<)dgEbgaLl^r:LR#< o9U=7=2y$=l4c2yS8>f4=5q@b0rX>==
-[2025-07-12 18:44:30] After jSEND->getData(): [img]https://upload.wikimedia.org/wikipedia/ru/b/bc/Poster_Inception_film_2010.jpg[/img]
-[2025-07-12 18:44:30] After removing control chars: [img]https://upload.wikimedia.org/wikipedia/ru/b/bc/Poster_Inception_film_2010.jpg[/img]
-[2025-07-12 18:44:30] After length limit (500 chars max): [img]https://upload.wikimedia.org/wikipedia/ru/b/bc/Poster_Inception_film_2010.jpg[/img]
-[2025-07-12 18:44:30] After format_comment(): 
-[2025-07-12 18:44:30] FINAL message for chat and DB: 
-[2025-07-12 18:44:30] Message inserted into DB.
-[2026-03-28 15:53:07] RAW input (hex): 404a210d48242141023d1006351e3d103d3d016002406050
-[2026-03-28 15:53:07] RAW input (string): @J!H$!A=5===`@`P
-[2026-03-28 15:53:07] After jSEND->getData(): тестирC5<
-[2026-03-28 15:53:07] After removing control chars: тестирC5<
-[2026-03-28 15:53:07] After length limit (500 chars max): тестирC5<
-[2026-03-28 15:53:07] After format_comment(): тестирC5&lt;
-[2026-03-28 15:53:07] FINAL message for chat and DB: тестирC5&lt;
-[2026-03-28 15:53:07] Message inserted into DB.
-[2026-03-29 05:53:04] RAW input (hex): 444a1f10070321293d10083d3d016002406040
-[2026-03-29 05:53:04] RAW input (string): DJ!)===`@`@
-[2026-03-29 05:53:04] After jSEND->getData(): привет
-[2026-03-29 05:53:04] After removing control chars: привет
-[2026-03-29 05:53:04] After length limit (500 chars max): привет
-[2026-03-29 05:53:04] After format_comment(): привет
-[2026-03-29 05:53:04] FINAL message for chat and DB: привет
-[2026-03-29 05:53:04] Message inserted into DB.
-[2026-03-29 05:53:06] RAW input (hex): 404a1d0c07420120115476301f3d103d3d0160024060101023013d10
-[2026-03-29 05:53:06] RAW input (string): @JB Tv0===`@`#=
-[2026-03-29 05:53:06] After jSEND->getData(): как дела?
-[2026-03-29 05:53:06] After removing control chars: как дела?
-[2026-03-29 05:53:06] After length limit (500 chars max): как дела?
-[2026-03-29 05:53:06] After format_comment(): как дела?
-[2026-03-29 05:53:06] FINAL message for chat and DB: как дела?
-[2026-03-29 05:53:06] Message inserted into DB.
-[2026-03-29 05:53:08] RAW input (hex): 4a200c0623621011406a421f3d103d3d016002406050173d103d10
-[2026-03-29 05:53:08] RAW input (string): J #b@jB===`@`P==
-[2026-03-29 05:53:08] After jSEND->getData(): РРКККСВњZZ
-[2026-03-29 05:53:08] After removing control chars: РРКККСВњZZ
-[2026-03-29 05:53:08] After length limit (500 chars max): РРКККСВњZZ
-[2026-03-29 05:53:08] After format_comment(): РРКККСВњZZ
-[2026-03-29 05:53:08] FINAL message for chat and DB: РРКККСВњZZ
-[2026-03-29 05:53:08] Message inserted into DB.
-[2026-03-29 05:58:27] RAW input (hex): 484a3d3212465011103d103d3d016002406040
-[2026-03-29 05:58:27] RAW input (string): HJ=2FP===`@`@
-[2026-03-29 05:58:27] After jSEND->getData(): фывфыв
-[2026-03-29 05:58:27] After removing control chars: фывфыв
-[2026-03-29 05:58:27] After length limit (500 chars max): фывфыв
-[2026-03-29 05:58:27] After format_comment(): фывфыв
-[2026-03-29 05:58:27] FINAL message for chat and DB: фывфыв
-[2026-03-29 05:58:27] Message inserted into DB.
-[2026-03-29 05:58:29] RAW input (hex): 444a1f10070321293d10083d3d016002406040
-[2026-03-29 05:58:29] RAW input (string): DJ!)===`@`@
-[2026-03-29 05:58:29] After jSEND->getData(): привет
-[2026-03-29 05:58:29] After removing control chars: привет
-[2026-03-29 05:58:29] After length limit (500 chars max): привет
-[2026-03-29 05:58:29] After format_comment(): привет
-[2026-03-29 05:58:29] FINAL message for chat and DB: привет
-[2026-03-29 05:58:29] Message inserted into DB.
-[2026-03-29 05:58:30] RAW input (hex): 404a1d0c07420120115476301f3d103d3d0160024060101023013d10
-[2026-03-29 05:58:30] RAW input (string): @JB Tv0===`@`#=
-[2026-03-29 05:58:30] After jSEND->getData(): как дела?
-[2026-03-29 05:58:30] After removing control chars: как дела?
-[2026-03-29 05:58:30] After length limit (500 chars max): как дела?
-[2026-03-29 05:58:30] After format_comment(): как дела?
-[2026-03-29 05:58:30] FINAL message for chat and DB: как дела?
-[2026-03-29 05:58:30] Message inserted into DB.
-[2026-03-29 05:58:32] RAW input (hex): 3d6c4a2310074201687178643e190f07603d103d3d0160024060101823013d10
-[2026-03-29 05:58:32] RAW input (string): =lJ#Bhqxd>`===`@`#=
-[2026-03-29 05:58:32] After jSEND->getData(): что нового?
-[2026-03-29 05:58:32] After removing control chars: что нового?
-[2026-03-29 05:58:32] After length limit (500 chars max): что нового?
-[2026-03-29 05:58:32] After format_comment(): что нового?
-[2026-03-29 05:58:32] FINAL message for chat and DB: что нового?
-[2026-03-29 05:58:32] Message inserted into DB.
-[2026-03-29 05:58:34] RAW input (hex): 504a1910463d32017001687e3d3d01600240603d10473d103d10
-[2026-03-29 05:58:34] RAW input (string): PJF=2ph~==`@`=G==
-[2026-03-29 05:58:34] After jSEND->getData(): все ок?
-[2026-03-29 05:58:34] After removing control chars: все ок?
-[2026-03-29 05:58:34] After length limit (500 chars max): все ок?
-[2026-03-29 05:58:34] After format_comment(): все ок?
-[2026-03-29 05:58:34] FINAL message for chat and DB: все ок?
-[2026-03-29 05:58:34] Message inserted into DB.
-[2026-03-29 05:58:35] RAW input (hex): 4a200c0623621011406a421f3d103d3d016002406050173d103d10
-[2026-03-29 05:58:35] RAW input (string): J #b@jB===`@`P==
-[2026-03-29 05:58:35] After jSEND->getData(): РРКККСВњZZ
-[2026-03-29 05:58:35] After removing control chars: РРКККСВњZZ
-[2026-03-29 05:58:35] After length limit (500 chars max): РРКККСВњZZ
-[2026-03-29 05:58:35] After format_comment(): РРКККСВњZZ
-[2026-03-29 05:58:35] FINAL message for chat and DB: РРКККСВњZZ
-[2026-03-29 05:58:35] Message inserted into DB.
+[2026-03-29 06:13:01] RAW input (hex): d18fd18bd0b0d18bd184d0b2d0b0
+[2026-03-29 06:13:01] RAW input (string): яыаыфва
+[2026-03-29 06:13:01] After direct UTF-8 read: яыаыфва
+[2026-03-29 06:13:01] After removing control chars: яыаыфва
+[2026-03-29 06:13:01] After length limit (500 chars max): яыаыфва
+[2026-03-29 06:13:01] After format_comment(): яыаыфва
+[2026-03-29 06:13:01] FINAL message for chat and DB: яыаыфва
+[2026-03-29 06:13:01] Message inserted into DB.
+[2026-03-29 06:13:03] RAW input (hex): d0bfd180d0b8d0b2d0b5d182d0b8d0ba
+[2026-03-29 06:13:03] RAW input (string): приветик
+[2026-03-29 06:13:03] After direct UTF-8 read: приветик
+[2026-03-29 06:13:03] After removing control chars: приветик
+[2026-03-29 06:13:03] After length limit (500 chars max): приветик
+[2026-03-29 06:13:03] After format_comment(): приветик
+[2026-03-29 06:13:03] FINAL message for chat and DB: приветик
+[2026-03-29 06:13:03] Message inserted into DB.
