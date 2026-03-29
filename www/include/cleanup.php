@@ -5,7 +5,8 @@ if (!defined('IN_TRACKER'))
 // Подключаем файл с настройками доступа к БД
 require_once(__DIR__ . '/secrets.php');
 
-function docleanup() {
+function docleanup()
+{
     global $mysqli, $torrent_dir, $signup_timeout, $max_dead_torrent_time, $autoclean_interval, $points_per_cleanup, $lang, $dooptimizedb;
 
     @set_time_limit(0);
@@ -14,7 +15,6 @@ function docleanup() {
     $deadtime = deadtime();
     $mysqli->query("DELETE FROM peers WHERE last_action < $deadtime");
 
-    sleep(5);
     $deadtime -= $max_dead_torrent_time;
 
     $torrents = array();
@@ -23,13 +23,11 @@ function docleanup() {
         $key = ($row["seeder"] == "yes") ? "seeders" : "leechers";
         $torrents[$row["torrent"]][$key] = $row["c"];
     }
-    sleep(5);
 
     $res = $mysqli->query("SELECT torrent, COUNT(*) AS c FROM comments GROUP BY torrent");
     while ($row = $res->fetch_assoc()) {
         $torrents[$row["torrent"]]["comments"] = $row["c"];
     }
-    sleep(5);
 
     $fields = explode(":", "comments:leechers:seeders");
     $res = $mysqli->query("SELECT id, seeders, leechers, comments FROM torrents");
@@ -48,7 +46,6 @@ function docleanup() {
         if (count($update))
             $mysqli->query("UPDATE torrents SET " . implode(", ", $update) . " WHERE id = $id");
     }
-    sleep(5);
 
     $secs = 5 * 86400;
     $dt = sqlesc(time() - $secs);
@@ -60,8 +57,6 @@ function docleanup() {
     // Пересчёт количества тэгов
     $mysqli->query('UPDATE tags AS t SET t.howmuch = (SELECT COUNT(*) FROM torrents AS ts WHERE ts.tags LIKE CONCAT(\'%\', t.name, \'%\') AND ts.category = t.category)');
     $mysqli->query('DELETE FROM tags WHERE howmuch = 0');
-
-    sleep(5);
 
     // Пересчёт постов и топиков на форуме
     $forums = $mysqli->query("SELECT id FROM forums");
@@ -77,31 +72,40 @@ function docleanup() {
         }
         $mysqli->query("UPDATE forums SET postcount=$postcount, topiccount=$topiccount WHERE id=" . $forum['id']);
     }
+
+    // Проверка и оптимизация таблиц запускаются только во время cleanup,
+    // а не при каждом подключении файла. Это убирает сильные тормоза
+    // при первом открытии сайта после старта контейнера.
+    if (!empty($dooptimizedb)) {
+        $alltables = $mysqli->query("SHOW TABLES");
+        while ($table = $alltables->fetch_assoc()) {
+            foreach ($table as $tablename) {
+                $tablename = trim((string)$tablename);
+                if ($tablename === '') {
+                    continue;
+                }
+
+                $sql = "REPAIR TABLE `" . $mysqli->real_escape_string($tablename) . "`";
+                @$mysqli->query($sql) or die("<b>Что-то пошло не так!</b><br />Запрос: $sql<br />Ошибка: (" . $mysqli->errno . ") " . htmlspecialchars($mysqli->error));
+            }
+        }
+        $alltables->free();
+
+        $alltables = $mysqli->query("SHOW TABLES");
+        while ($table = $alltables->fetch_assoc()) {
+            foreach ($table as $tablename) {
+                $tablename = trim((string)$tablename);
+                if ($tablename === '') {
+                    continue;
+                }
+
+                $sql = "OPTIMIZE TABLE `" . $mysqli->real_escape_string($tablename) . "`";
+                @$mysqli->query($sql) or die("<b>Что-то пошло не так!</b><br />Запрос: $sql<br />Ошибка: (" . $mysqli->errno . ") " . htmlspecialchars($mysqli->error));
+            }
+        }
+        $alltables->free();
+    }
 }
 
 // Проверка и оптимизация таблиц
-$alltables = $mysqli->query("SHOW TABLES");
-while ($table = $alltables->fetch_assoc()) {
-    foreach ($table as $tablename) {
-        $sql = "REPAIR TABLE `" . $tablename . "`";
-        if (preg_match('@^(CHECK|ANALYZE|REPAIR|OPTIMIZE)[[:space:]]TABLE[[:space:]]' . $tablename . '$@i', $sql)) {
-            @$mysqli->query($sql) or die("<b>Что-то пошло не так!</b><br />Запрос: $sql<br />Ошибка: (" . $mysqli->errno . ") " . htmlspecialchars($mysqli->error));
-        }
-    }
-}
-$alltables->free();
-
-$alltables = $mysqli->query("SHOW TABLES");
-while ($table = $alltables->fetch_assoc()) {
-    foreach ($table as $tablename) {
-        $sql = "OPTIMIZE TABLE `" . $tablename . "`";
-        if (preg_match('@^(CHECK|ANALYZE|REPAIR|OPTIMIZE)[[:space:]]TABLE[[:space:]]' . $tablename . '$@i', $sql)) {
-            @$mysqli->query($sql) or die("<b>Что-то пошло не так!</b><br />Запрос: $sql<br />Ошибка: (" . $mysqli->errno . ") " . htmlspecialchars($mysqli->error));
-        }
-    }
-}
-$alltables->free();
-
 write_log("Очистка системы была успешно произведена @ " . date("F j, Y, g:i a"), "green", "system");
-
-?>
