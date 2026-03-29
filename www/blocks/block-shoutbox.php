@@ -8,19 +8,18 @@ if (!defined('BLOCK_FILE')) {
 global $CURUSER; // Текущий пользователь (используется, например, в js для прав)
 ?>
 <!-- Подключаем внешние JS и стили -->
-<script src="js/j.send.js" type="text/javascript"></script>
-<script src="js/chat_mem.js" type="text/javascript"></script>
-<link rel="stylesheet" href="css/chat.css">
+<script src="js/chat_mem.js?v=20260329-3" type="text/javascript"></script>
+<link rel="stylesheet" href="css/chat.css?v=20260329-1" type="text/css">
 <script type="text/javascript">
-function openSmiles(type) {
-    var url = (type === 1)
-        ? "moresmiles.php?form=shbox&text=text"
-        : "moresmiles2.php?form=shbox&text=text";
-    var opts = (type === 1)
-        ? "height=500,width=500,resizable=yes,scrollbars=yes"
-        : "height=450,width=550,resizable=yes,scrollbars=yes";
-    window.open(url, "smileWindow" + type, opts);
-}
+    function openSmiles(type) {
+        var url = (type === 1) ?
+            "moresmiles.php?form=shbox&text=text" :
+            "moresmiles2.php?form=shbox&text=text";
+        var opts = (type === 1) ?
+            "height=500,width=500,resizable=yes,scrollbars=yes" :
+            "height=450,width=550,resizable=yes,scrollbars=yes";
+        window.open(url, "smileWindow" + type, opts);
+    }
 </script>
 <?php
 // Заголовок блока
@@ -40,7 +39,7 @@ $content = <<<HTML
         <img class="button" src="pic/picture.gif" name="btnPicture" onclick="doImage('text')" alt="Вставить картинку">
     </div>
     <div style="float:right">
-        <span id="date" style="width:20px"></span>, 
+        <span id="date" style="width:20px"></span>,
         <span id="hour_min"></span><span id="sec"></span>
     </div>
     <br /><br />
