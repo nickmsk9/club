@@ -14,6 +14,10 @@ if (cache_check("bd", 600)) {
 } else {
     $query = "SELECT id, username, class, warned, gender, enabled, parked, donor FROM users WHERE birthday LIKE ?";
     $stmt = $mysqli->prepare($query);
+    if (!$stmt) {
+        error_log("Ошибка подготовки запроса в block-bd: " . $mysqli->error . "\n", 3, __DIR__ . "/logs/block-bd.log");
+        $res = [];
+    } else {
     $like = "%-" . $currentdate;
     $stmt->bind_param("s", $like);
     $stmt->execute();
@@ -21,6 +25,7 @@ if (cache_check("bd", 600)) {
     $res = [];
     while ($row = $result->fetch_assoc()) {
         $res[] = $row;
+    }
     }
     cache_write("bd", $res);
 }

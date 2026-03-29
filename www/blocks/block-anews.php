@@ -29,9 +29,9 @@ if ($resource) {
         if (strlen($descr) > 800)   
             $descr = substr($descr, 0, 800) . "..."; 
 $content .=
-     "<table width=100% border=0 cellspacing=0 cellpadding=0 ><tr><td style=\"padding-left:15px; padding-bottom:7px;\" id=\"no_border\">
-	  <h2>".$subject."</h2></td></tr>
-	  	  <tr><td id=\"no_border\"><div style=\"float:right;\"><img border='0' width=250 src=".$poster." /></div>
+	     "<table width=100% border=0 cellspacing=0 cellpadding=0 ><tr><td style=\"padding-left:15px; padding-bottom:7px;\" id=\"no_border\">
+		  <h2>".$subject."</h2></td></tr>
+		  	  <tr><td id=\"no_border\"><div style=\"float:right;\"><img border='0' width='250' src=\"".$poster."\" /></div>
 
 	  <div align=\"left\" style=\"margin:8px; width:400px;\">".format_comment($descr)."</div></td></tr>";
       $content .="<tr><td id=\"no_border\"><div align=\"right\" style=\"padding-top:5px;\">";
@@ -44,10 +44,11 @@ $content .=
 
 	}
 	$content .= "<p align=\"right\">[<a href=\"anewsarchive.php\">Архив новостей</a>]</p></ul></td></tr>\n";
-} else {
-	$content .= "<table class=\"main\" align=\"center\" border=\"1\" cellspacing=\"0\" cellpadding=\"10\"><tr><td class=\"text\">";
-	$content .= "<div align=\"center\"><h3>".$lang['no_news']."</h3></div>\n";
-	$content .= "</td></tr>";
+	} else {
+		$content = "";
+		$content .= "<table class=\"main\" align=\"center\" border=\"1\" cellspacing=\"0\" cellpadding=\"10\"><tr><td class=\"text\">";
+		$content .= "<div align=\"center\"><h3>".$lang['no_news']."</h3></div>\n";
+		$content .= "</td></tr>";
 }
 
 ?>

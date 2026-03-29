@@ -190,3 +190,11 @@
 [2026-03-29 10:44:14] After format_comment(): работает?
 [2026-03-29 10:44:14] FINAL message for chat and DB: работает?
 [2026-03-29 10:44:14] Message inserted into DB.
+[2026-03-29 10:54:28] RAW input (hex): 2a382a
+[2026-03-29 10:54:28] RAW input (string): *8*
+[2026-03-29 10:54:28] After direct UTF-8 read: *8*
+[2026-03-29 10:54:28] After removing control chars: *8*
+[2026-03-29 10:54:28] After length limit (500 chars max): *8*
+[2026-03-29 10:54:28] After format_comment(): 
+[2026-03-29 10:54:28] FINAL message for chat and DB: 
+[2026-03-29 10:54:28] Message inserted into DB.
