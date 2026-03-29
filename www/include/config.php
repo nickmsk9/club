@@ -84,4 +84,11 @@ IP-баны - 1 запрос на любой странице.
 
 ### security protection by n-sw-bit ::: config ###
 $hacker_ban_time = 1;//minutes
+
+
+/*
+
+test for mac mini m4
+*/
+
 ?>
