@@ -911,13 +911,16 @@ function ratingpic($num) {
 }
 
 function writecomment($userid, $comment) {
-	$res = sql_query("SELECT modcomment FROM users WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+	$userid = (int)$userid;
+	$res = sql_query("SELECT modcomment FROM users WHERE id = $userid") or sqlerr(__FILE__, __LINE__);
 	$arr = mysqli_fetch_assoc($res);
 
-	$modcomment = date("d-m-Y") . " - " . $comment . "" . ($arr[modcomment] != "" ? "\n" : "") . "$arr[modcomment]";
+	$currentComment = $arr['modcomment'] ?? '';
+	$separator = $currentComment !== '' ? "\n" : '';
+	$modcomment = date("d-m-Y") . " - " . $comment . $separator . $currentComment;
 	$modcom = sqlesc($modcomment);
 
-	return sql_query("UPDATE LOW_PRIORITY users SET modcomment = $modcom WHERE id = '$userid'") or sqlerr(__FILE__, __LINE__);
+	return sql_query("UPDATE LOW_PRIORITY users SET modcomment = $modcom WHERE id = $userid") or sqlerr(__FILE__, __LINE__);
 }
 
 function hash_pad($hash) {
