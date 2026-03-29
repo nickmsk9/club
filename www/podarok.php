@@ -18,10 +18,43 @@ function bark(string $msg): void {
 
 gzip();
 dbconn(false);
+global $CURUSER;
+
+$idu = (int)($_GET['idu'] ?? 0);
+$p   = htmlspecialchars($_GET['p'] ?? '', ENT_QUOTES);
+
+if ($idu > 0 && (int)$p > 0 && !empty($CURUSER['id'])) {
+    $pid = (int)$p;
+
+    if ($idu === (int)$CURUSER['id']) {
+        echo "Нельзя подарить себе";
+        exit;
+    }
+
+    $res = sql_query("SELECT * FROM podarki WHERE id = " . sqlesc($pid)) or sqlerr(__FILE__, __LINE__);
+    if (mysqli_num_rows($res) === 0) {
+        echo "Подарок не найден!";
+        exit;
+    }
+
+    $gift = mysqli_fetch_assoc($res);
+
+    if ($CURUSER['bonus'] < $gift['bonus']) {
+        echo "Недостаточно бонусов!";
+        exit;
+    }
+
+    sql_query("UPDATE users SET bonus = bonus - {$gift['bonus']} WHERE id = " . (int)$CURUSER['id']) or sqlerr(__FILE__, __LINE__);
+    sql_query("INSERT INTO podarok (podarokid, userid, useradd, date, text) VALUES (
+        {$gift['id']}, $idu, {$CURUSER['id']}, NOW(), '')") or sqlerr(__FILE__, __LINE__);
+
+    echo "<b>Подарок успешно отправлен!</b>";
+    exit;
+}
+
 $addparam  = $_GET['addparam']  ?? '';
 $pagerlink = $_GET['pagerlink'] ?? '';
 parked();
-global $CURUSER;
 
 // Функция вывода CSS для блока подарков
 function cssstile(): void {
@@ -102,7 +135,6 @@ if ($id > 0 && !empty($CURUSER['id'])) {
                     },
                     'html'
                 );
-                s();
             }
             </script>
             <?php
@@ -139,7 +171,7 @@ if ($id > 0 && !empty($CURUSER['id'])) {
             print $pagertop;
 
             while ($arr = mysqli_fetch_assoc($res)) {
-                if ($CURUSER['bonus'] > $arr['bonus']) {
+                if ($CURUSER['bonus'] >= $arr['bonus']) {
                     $style = "onclick=\"getpod('{$arr['id']}');\"";
                 } else {
                     $style = "style=\"background:#ffc3c3;border:1px solid #ff7777;cursor:default;\"";
@@ -158,38 +190,7 @@ if ($id > 0 && !empty($CURUSER['id'])) {
             stdmsg("Внимание", 'Такого пользователя не существует!');
         }
     }
-    stdfoot();
-$idu = (int)($_GET['idu'] ?? 0); 
-$p   = htmlspecialchars($_GET['p'] ?? '', ENT_QUOTES);
-
-if ($idu > 0 && (int)$p > 0 && !empty($CURUSER['id'])) {
-    $pid = (int)$p;
-
-    if ($idu === (int)$CURUSER['id']) {
-        echo "Нельзя подарить себе";
-        exit;
-    }
-
-    $res = sql_query("SELECT * FROM podarki WHERE id = " . sqlesc($pid)) or sqlerr(__FILE__, __LINE__);
-    if (mysqli_num_rows($res) === 0) {
-        echo "Подарок не найден!";
-        exit;
-    }
-
-    $gift = mysqli_fetch_assoc($res);
-
-    if ($CURUSER['bonus'] < $gift['bonus']) {
-        echo "Недостаточно бонусов!";
-        exit;
-    }
-
-    sql_query("UPDATE users SET bonus = bonus - {$gift['bonus']} WHERE id = " . (int)$CURUSER['id']) or sqlerr(__FILE__, __LINE__);
-    sql_query("INSERT INTO podarok (podarokid, userid, useradd, date, text) VALUES (
-        {$gift['id']}, $idu, {$CURUSER['id']}, NOW(), '')") or sqlerr(__FILE__, __LINE__);
-
-    echo "<b>Подарок успешно отправлен!</b>";
-    exit;
-}
+  // stdfoot();
 
 
 
@@ -214,16 +215,16 @@ begin_main_frame();
 begin_frame ( "Подаренные пользователю - вернуться <a href=\"/user/id". $id ."\"><u>в профиль</u></a>" );
 print ( "<div class='win_post'>" );
 $res = sql_query ( "
-SELECT 
-podarok.id, 
-podarok.podarokid, 
-podarok.userid, 
-podarok.useradd, 
-podarok.date, 
-podarok.text, 
-(SELECT podarki.pic FROM podarki WHERE podarki.id=podarok.podarokid) AS picp, 
-(SELECT users.username FROM users WHERE users.id=podarok.useradd) AS odd 
-FROM podarok 
+SELECT
+podarok.id,
+podarok.podarokid,
+podarok.userid,
+podarok.useradd,
+podarok.date,
+podarok.text,
+(SELECT podarki.pic FROM podarki WHERE podarki.id=podarok.podarokid) AS picp,
+(SELECT users.username FROM users WHERE users.id=podarok.useradd) AS odd
+FROM podarok
 WHERE userid = ". sqlesc($id)."" ) or sqlerr ( __FILE__, __LINE__ );
 $rr=0;
 while ( $arr = mysqli_fetch_assoc ( $res ) ) {
@@ -249,16 +250,16 @@ begin_main_frame();
 begin_frame ( "Подаренные пользователем" );
 print ( "<div class='win_post'>" );
 $res = sql_query ( "
-SELECT 
-podarok.id, 
-podarok.podarokid, 
-podarok.userid, 
-podarok.useradd, 
-podarok.date, 
-podarok.text, 
-(SELECT podarki.pic FROM podarki WHERE podarki.id=podarok.podarokid) AS picp, 
-(SELECT users.username FROM users WHERE users.id=podarok.userid) AS odd 
-FROM podarok 
+SELECT
+podarok.id,
+podarok.podarokid,
+podarok.userid,
+podarok.useradd,
+podarok.date,
+podarok.text,
+(SELECT podarki.pic FROM podarki WHERE podarki.id=podarok.podarokid) AS picp,
+(SELECT users.username FROM users WHERE users.id=podarok.userid) AS odd
+FROM podarok
 WHERE useradd = ". sqlesc($id)."" ) or sqlerr ( __FILE__, __LINE__ );
 while ( $arr = mysqli_fetch_assoc ( $res ) ) {
 $rr++;
@@ -368,16 +369,16 @@ function ShowEpisodes(n){jQuery('div[id^="row_'+n+'_"]').each(function(){if(jQue
         $browsemenur = "<a href=\"podarok.php?c=all&page=" . ($page + 1) . "\"><b>Вперед</b></a>";
     }
 $res = sql_query ( "
-SELECT 
-podarok.id, 
-podarok.podarokid, 
-podarok.userid, 
-podarok.useradd, 
-podarok.date, 
-podarok.text, 
-(SELECT podarki.pic FROM podarki WHERE podarki.id=podarok.podarokid) AS picp, 
-(SELECT users.username FROM users WHERE users.id=podarok.userid) AS odd 
-FROM podarok 
+SELECT
+podarok.id,
+podarok.podarokid,
+podarok.userid,
+podarok.useradd,
+podarok.date,
+podarok.text,
+(SELECT podarki.pic FROM podarki WHERE podarki.id=podarok.podarokid) AS picp,
+(SELECT users.username FROM users WHERE users.id=podarok.userid) AS odd
+FROM podarok
 LIMIT {$offset},{$perpage}" ) or sqlerr ( __FILE__, __LINE__ );
 $rr=0;
 while ( $arr = mysqli_fetch_assoc ( $res ) ) {
@@ -403,7 +404,7 @@ print ( "<div class='win_info'><div class='win_infot'></div>" );
 print ( "<table width=100% height=20><tr><td width='50%' align='left'>$browsemenul</td><td width='50%' align='right'>$browsemenur</td></tr></table>" );
 ?>
 <script language="javascript" type="text/javascript">
-var Paginator = function(paginatorHolderId, pagesTotal, pagesSpan, pageCurrent, baseUrl){if(!document.getElementById(paginatorHolderId) || !pagesTotal || !pagesSpan) return false;this.inputData = {paginatorHolderId: paginatorHolderId,pagesTotal: pagesTotal,pagesSpan: pagesSpan < pagesTotal ? pagesSpan : pagesTotal,pageCurrent: pageCurrent,baseUrl: baseUrl ? baseUrl : '<? print ( "?c=all&page=" ); ?>'};this.html = {holder: null,table: null,trPages: null,trScrollBar: null,tdsPages: null,scrollBar: null,scrollThumb: null,pageCurrentMark: null};this.prepareHtml();this.initScrollThumb();this.initPageCurrentMark();this.initEvents();this.scrollToPageCurrent();} 
+var Paginator = function(paginatorHolderId, pagesTotal, pagesSpan, pageCurrent, baseUrl){if(!document.getElementById(paginatorHolderId) || !pagesTotal || !pagesSpan) return false;this.inputData = {paginatorHolderId: paginatorHolderId,pagesTotal: pagesTotal,pagesSpan: pagesSpan < pagesTotal ? pagesSpan : pagesTotal,pageCurrent: pageCurrent,baseUrl: baseUrl ? baseUrl : '<? print ( "?c=all&page=" ); ?>'};this.html = {holder: null,table: null,trPages: null,trScrollBar: null,tdsPages: null,scrollBar: null,scrollThumb: null,pageCurrentMark: null};this.prepareHtml();this.initScrollThumb();this.initPageCurrentMark();this.initEvents();this.scrollToPageCurrent();}
 Paginator.prototype.prepareHtml = function(){this.html.holder = document.getElementById(this.inputData.paginatorHolderId);this.html.holder.innerHTML = this.makePagesTableHtml();this.html.table = this.html.holder.getElementsByTagName('table')[0];var trPages = this.html.table.getElementsByTagName('tr')[0];this.html.tdsPages = trPages.getElementsByTagName('td');this.html.scrollBar = getElementsByClassName(this.html.table, 'div', 'scroll_bar')[0];this.html.scrollThumb = getElementsByClassName(this.html.table, 'div', 'scroll_thumb')[0];this.html.pageCurrentMark = getElementsByClassName(this.html.table, 'div', 'current_page_mark')[0];if(this.inputData.pagesSpan == this.inputData.pagesTotal){addClass(this.html.holder, 'fullsize');}}
 Paginator.prototype.makePagesTableHtml = function(){var tdWidth = (100 / this.inputData.pagesSpan) + '%';var html = ''+'<table width="100%">'+'<tr>';for (var i=1; i<=this.inputData.pagesSpan; i++){html += '<td width="' + tdWidth + '"></td>';}html += ''+'</tr>'+'<tr>'+'<td colspan="'+ this.inputData.pagesSpan + '">'+'<div class="scroll_bar">'+'<div class="scroll_trough"></div>'+'<div class="scroll_thumb">'+'<div class="scroll_knob"> </div>'+'</div>'+'<div class="current_page_mark"></div>'+'</div>'+'</td>'+'</tr>'+'</table>';return html;}
 Paginator.prototype.initScrollThumb = function(){this.html.scrollThumb.widthMin = '8';this.html.scrollThumb.widthPercent = this.inputData.pagesSpan/this.inputData.pagesTotal * 100;this.html.scrollThumb.xPosPageCurrent = (this.inputData.pageCurrent - Math.round(this.inputData.pagesSpan/2))/this.inputData.pagesTotal * this.html.table.offsetWidth;this.html.scrollThumb.xPos = this.html.scrollThumb.xPosPageCurrent;this.html.scrollThumb.xPosMin = 0;this.html.scrollThumb.xPosMax;this.html.scrollThumb.widthActual;this.setScrollThumbWidth();}
@@ -481,6 +482,7 @@ print ( "<div class=\"smilies\"><div><a href=\"{$arr['pic']}\" onclick=\"return 
 print ( "</div>" );
 end_frame();
 end_main_frame();
+stdfoot();
 }
 
 }
