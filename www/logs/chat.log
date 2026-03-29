@@ -86,3 +86,107 @@
 [2026-03-29 06:14:51] After format_comment(): ура!
 [2026-03-29 06:14:51] FINAL message for chat and DB: ура!
 [2026-03-29 06:14:51] Message inserted into DB.
+[2026-03-29 10:44:09] RAW input (hex): d184d0b2d184d18b
+[2026-03-29 10:44:09] RAW input (string): фвфы
+[2026-03-29 10:44:09] After direct UTF-8 read: фвфы
+[2026-03-29 10:44:09] After removing control chars: фвфы
+[2026-03-29 10:44:09] After length limit (500 chars max): фвфы
+[2026-03-29 10:44:09] After format_comment(): фвфы
+[2026-03-29 10:44:09] FINAL message for chat and DB: фвфы
+[2026-03-29 10:44:09] Message inserted into DB.
+[2026-03-29 10:44:09] RAW input (hex): d0b2d184d18b
+[2026-03-29 10:44:09] RAW input (string): вфы
+[2026-03-29 10:44:09] After direct UTF-8 read: вфы
+[2026-03-29 10:44:09] After removing control chars: вфы
+[2026-03-29 10:44:09] After length limit (500 chars max): вфы
+[2026-03-29 10:44:09] After format_comment(): вфы
+[2026-03-29 10:44:09] FINAL message for chat and DB: вфы
+[2026-03-29 10:44:09] Message inserted into DB.
+[2026-03-29 10:44:09] RAW input (hex): d0b2
+[2026-03-29 10:44:09] RAW input (string): в
+[2026-03-29 10:44:10] After direct UTF-8 read: в
+[2026-03-29 10:44:10] After removing control chars: в
+[2026-03-29 10:44:10] After length limit (500 chars max): в
+[2026-03-29 10:44:10] After format_comment(): в
+[2026-03-29 10:44:10] FINAL message for chat and DB: в
+[2026-03-29 10:44:10] Message inserted into DB.
+[2026-03-29 10:44:10] RAW input (hex): d18bd0b2
+[2026-03-29 10:44:10] RAW input (string): ыв
+[2026-03-29 10:44:10] After direct UTF-8 read: ыв
+[2026-03-29 10:44:10] After removing control chars: ыв
+[2026-03-29 10:44:10] After length limit (500 chars max): ыв
+[2026-03-29 10:44:10] After format_comment(): ыв
+[2026-03-29 10:44:10] FINAL message for chat and DB: ыв
+[2026-03-29 10:44:10] Message inserted into DB.
+[2026-03-29 10:44:10] RAW input (hex): d184d18b
+[2026-03-29 10:44:10] RAW input (string): фы
+[2026-03-29 10:44:10] After direct UTF-8 read: фы
+[2026-03-29 10:44:10] After removing control chars: фы
+[2026-03-29 10:44:10] After length limit (500 chars max): фы
+[2026-03-29 10:44:10] After format_comment(): фы
+[2026-03-29 10:44:10] FINAL message for chat and DB: фы
+[2026-03-29 10:44:10] Message inserted into DB.
+[2026-03-29 10:44:10] RAW input (hex): d0b2
+[2026-03-29 10:44:10] RAW input (string): в
+[2026-03-29 10:44:10] After direct UTF-8 read: в
+[2026-03-29 10:44:10] After removing control chars: в
+[2026-03-29 10:44:10] After length limit (500 chars max): в
+[2026-03-29 10:44:10] After format_comment(): в
+[2026-03-29 10:44:10] FINAL message for chat and DB: в
+[2026-03-29 10:44:10] Message inserted into DB.
+[2026-03-29 10:44:10] RAW input (hex): d18b
+[2026-03-29 10:44:10] RAW input (string): ы
+[2026-03-29 10:44:10] After direct UTF-8 read: ы
+[2026-03-29 10:44:10] After removing control chars: ы
+[2026-03-29 10:44:10] After length limit (500 chars max): ы
+[2026-03-29 10:44:10] After format_comment(): ы
+[2026-03-29 10:44:10] FINAL message for chat and DB: ы
+[2026-03-29 10:44:10] Message inserted into DB.
+[2026-03-29 10:44:10] RAW input (hex): d184d18bd0b0
+[2026-03-29 10:44:10] RAW input (string): фыа
+[2026-03-29 10:44:10] After direct UTF-8 read: фыа
+[2026-03-29 10:44:10] After removing control chars: фыа
+[2026-03-29 10:44:10] After length limit (500 chars max): фыа
+[2026-03-29 10:44:10] After format_comment(): фыа
+[2026-03-29 10:44:10] FINAL message for chat and DB: фыа
+[2026-03-29 10:44:10] Message inserted into DB.
+[2026-03-29 10:44:11] RAW input (hex): d18bd0b2
+[2026-03-29 10:44:11] RAW input (string): ыв
+[2026-03-29 10:44:11] After direct UTF-8 read: ыв
+[2026-03-29 10:44:11] After removing control chars: ыв
+[2026-03-29 10:44:11] After length limit (500 chars max): ыв
+[2026-03-29 10:44:11] After format_comment(): ыв
+[2026-03-29 10:44:11] FINAL message for chat and DB: ыв
+[2026-03-29 10:44:11] Message inserted into DB.
+[2026-03-29 10:44:11] RAW input (hex): d0b0
+[2026-03-29 10:44:11] RAW input (string): а
+[2026-03-29 10:44:11] After direct UTF-8 read: а
+[2026-03-29 10:44:11] After removing control chars: а
+[2026-03-29 10:44:11] After length limit (500 chars max): а
+[2026-03-29 10:44:11] After format_comment(): а
+[2026-03-29 10:44:11] FINAL message for chat and DB: а
+[2026-03-29 10:44:11] Message inserted into DB.
+[2026-03-29 10:44:11] RAW input (hex): d18bd0b0
+[2026-03-29 10:44:11] RAW input (string): ыа
+[2026-03-29 10:44:11] After direct UTF-8 read: ыа
+[2026-03-29 10:44:11] After removing control chars: ыа
+[2026-03-29 10:44:11] After length limit (500 chars max): ыа
+[2026-03-29 10:44:11] After format_comment(): ыа
+[2026-03-29 10:44:11] FINAL message for chat and DB: ыа
+[2026-03-29 10:44:11] Message inserted into DB.
+[2026-03-29 10:44:11] RAW input (hex): d18b
+[2026-03-29 10:44:11] RAW input (string): ы
+[2026-03-29 10:44:11] After direct UTF-8 read: ы
+[2026-03-29 10:44:11] After removing control chars: ы
+[2026-03-29 10:44:11] After length limit (500 chars max): ы
+[2026-03-29 10:44:11] After format_comment(): ы
+[2026-03-29 10:44:11] FINAL message for chat and DB: ы
+[2026-03-29 10:44:11] Message inserted into DB.
+[2026-03-29 10:44:14] RAW input (hex): d180d0b0d0b1d0bed182d0b0d0b5d1823f
+[2026-03-29 10:44:14] RAW input (string): работает?
+[2026-03-29 10:44:14] After direct UTF-8 read: работает?
+[2026-03-29 10:44:14] After removing control chars: работает?
+[2026-03-29 10:44:14] After length limit (500 chars max): работает?
+[2026-03-29 10:44:14] After format_comment(): работает?
+[2026-03-29 10:44:14] FINAL message for chat and DB: работает?
+[2026-03-29 10:44:14] Message inserted into DB.
