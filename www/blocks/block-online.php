@@ -23,27 +23,38 @@ if (cache_check("guests_online", 300)) {
 }
 $guests_online = number_format($guests_count);
 
-if (cache_check("online", 300)) {
-    $result = cache_read("online");
+$onlineInterval = 900; // 15 минут
+$onlineCacheTtl = 60;  // кэш блока онлайн держим коротким, чтобы список быстрее обновлялся
+$onlineCacheKey = "online_v2";
+
+if (cache_check($onlineCacheKey, $onlineCacheTtl)) {
+    $result = cache_read($onlineCacheKey);
+    if (!is_array($result)) {
+        $result = array();
+    }
 } else {
     $title_who = array();
-
-    $dt = sqlesc(time() - 300);
+    $cutoff = sqlesc(get_date_time(time() - $onlineInterval));
 
     $result = sql_query("SELECT u.id,
-                u.username, 
+                u.username,
                 u.class,
                 u.warned,
                 u.gender,
                 u.enabled,
                 u.parked,
-                u.donor FROM users AS u WHERE u.last_access > " . sqlesc(get_date_time(time() - 300)) . " AND hiden = 'no' ORDER BY u.class DESC") or sqlerr(__FILE__, __LINE__);
+                u.donor
+            FROM users AS u
+            WHERE u.last_access > " . $cutoff . "
+              AND u.hiden = 'no'
+            ORDER BY u.class DESC") or sqlerr(__FILE__, __LINE__);
 
     $online_cache = array();
-    while ($cache_data = mysqli_fetch_assoc($result))
+    while ($cache_data = mysqli_fetch_assoc($result)) {
         $online_cache[] = $cache_data;
+    }
 
-    cache_write("online", $online_cache);
+    cache_write($onlineCacheKey, $online_cache);
     $result = $online_cache;
 }
 
