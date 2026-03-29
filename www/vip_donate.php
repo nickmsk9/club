@@ -4,14 +4,18 @@ dbconn(false);
 
 loggedinorreturn();
 global $memcached, $CURUSER;
-$memcached->delete('users_'.$CURUSER['id']);
 
-$content = ''; // Инициализация переменной, чтобы не было ошибки
+$userid = isset($CURUSER['id']) && !is_array($CURUSER['id']) ? (int)$CURUSER['id'] : 0;
+if ($userid > 0 && $memcached instanceof Memcached) {
+    $memcached->delete('users_' . $userid);
+}
+
+$content = '';
+$title_who = [];
 
 $currentdate = date("Y-m");
-$result = cache_get("donate");
-if ($result === false) {
-    $title_who = array();
+$result = cache_check('donate', 300) ? cache_read('donate') : false;
+if (!is_array($result)) {
 
     $resm = sql_query("SELECT DISTINCT d.msg, u.username, u.class, u.warned,
                 u.gender,
@@ -20,21 +24,20 @@ if ($result === false) {
                 u.donor 
                 FROM donatedelux d 
                 LEFT JOIN users u ON d.msg = u.id 
-                WHERE date LIKE '".$currentdate."-%' AND test = '0'") or sqlerr(__FILE__, __LINE__);
-    $donate_cache = array();
+                WHERE d.date LIKE '".$currentdate."-%' AND d.test = '0'") or sqlerr(__FILE__, __LINE__);
+    $donate_cache = [];
     while ($cache_data = mysqli_fetch_assoc($resm)) {
         $donate_cache[] = $cache_data;
     }
 
-    cache_set("donate", $donate_cache, 300);
+    cache_write('donate', $donate_cache);
     $result = $donate_cache;
 }
 
-$title_who = [];
 foreach ($result as $arr) {
-    $uid = $arr['msg'];
-    $uname = $arr['username'];
-    $class = $arr['class'];
+    $uid = (int)($arr['msg'] ?? 0);
+    $uname = $arr['username'] ?? 'Пользователь';
+    $class = (int)($arr['class'] ?? 0);
     // Вставляем ссылку на пользователя с цветом и иконками
     $title_who[] = "<a href=\"user/id".$uid."\" class=\"online\">".get_user_class_color($class, $uname). get_user_icons($arr)."</a>";
 }
@@ -89,10 +92,11 @@ $res = sql_query("SELECT SUM(profit) as pribol FROM donatedelux WHERE date LIKE 
 
 $row = mysqli_fetch_assoc($res);
 $amount = $row['pribol'] ?? 0;
-$start = $amount;
+$start = (float)$amount;
 $finish = 3100;
 
 $end = $finish - $start;
+$end = max(0, $end);
 $perc1 = ($start * 100) / $finish;
 $perc = round($perc1, 2);
 if ($perc >= 100) $perc = 100;
