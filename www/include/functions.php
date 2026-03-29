@@ -758,33 +758,49 @@ function pager($rpp, $count, $href, $opts = array()) {
 }
 
 function downloaderdata($res) {
-	$rows = array();
-	$ids = array();
-	$peerdata = array();
+	$rows = [];
+	$ids = [];
+	$peerdata = [];
+
+	if (!$res) {
+		return [$rows, $peerdata];
+	}
+
 	while ($row = mysqli_fetch_assoc($res)) {
 		$rows[] = $row;
-		$id = $row["id"];
+		$id = (int)$row['id'];
 		$ids[] = $id;
-		$peerdata[$id] = array(downloaders => 0, seeders => 0, comments => 0);
+		$peerdata[$id] = [
+			'downloaders' => 0,
+			'seeders' => 0,
+			'comments' => 0,
+		];
 	}
 
-	if (count($ids)) {
-		$allids = implode(",", $ids);
-		$res = sql_query("SELECT COUNT(*) AS c, torrent, seeder FROM peers WHERE torrent IN ($allids) GROUP BY torrent, seeder");
-		while ($row = mysqli_fetch_assoc($res)) {
-			if ($row["seeder"] == "yes")
-				$key = "seeders";
-			else
-				$key = "downloaders";
-			$peerdata[$row["torrent"]][$key] = $row["c"];
-		}
-		$res = sql_query("SELECT COUNT(*) AS c, torrent FROM comments WHERE torrent IN ($allids) GROUP BY torrent");
-		while ($row = mysqli_fetch_assoc($res)) {
-			$peerdata[$row["torrent"]]["comments"] = $row["c"];
+	if (!$ids) {
+		return [$rows, $peerdata];
+	}
+
+	$allids = implode(',', $ids);
+
+	$peersRes = sql_query("SELECT COUNT(*) AS c, torrent, seeder FROM peers WHERE torrent IN ($allids) GROUP BY torrent, seeder");
+	if ($peersRes) {
+		while ($row = mysqli_fetch_assoc($peersRes)) {
+			$torrentId = (int)$row['torrent'];
+			$key = $row['seeder'] === 'yes' ? 'seeders' : 'downloaders';
+			$peerdata[$torrentId][$key] = (int)$row['c'];
 		}
 	}
 
-	return array($rows, $peerdata);
+	$commentsRes = sql_query("SELECT COUNT(*) AS c, torrent FROM comments WHERE torrent IN ($allids) GROUP BY torrent");
+	if ($commentsRes) {
+		while ($row = mysqli_fetch_assoc($commentsRes)) {
+			$torrentId = (int)$row['torrent'];
+			$peerdata[$torrentId]['comments'] = (int)$row['c'];
+		}
+	}
+
+	return [$rows, $peerdata];
 }
 
 
