@@ -522,16 +522,15 @@ function stdhead($title = "", $msgalert = true, $all_title = false) {
     // Проверяем наличие пользователя и кешируем количество непрочитанных сообщений
     $unread = 0;
     if (!empty($CURUSER['id'])) {
-        if ($mcache) {
+        if ($mcache && method_exists($mcache, 'get_value') && method_exists($mcache, 'cache_value')) {
             $cache_key = 'unread_msgs_user_' . $CURUSER['id'];
-            $unread = $mcache->get($cache_key);
+            $unread = $mcache->get_value($cache_key);
             if ($unread === false) {
                 $res = sql_query("SELECT COUNT(*) FROM messages WHERE receiver = " . (int)$CURUSER["id"] . " AND unread='yes' LIMIT 1");
                 if ($res) {
                     $arr = mysqli_fetch_row($res);
                     $unread = (int)$arr[0];
-                    // Кешируем на 30 секунд (или сколько нужно)
-                    $mcache->set($cache_key, $unread, 30);
+                    $mcache->cache_value($cache_key, $unread, 30);
                 }
             }
         } else {
@@ -810,22 +809,22 @@ function searchfield($s) {
 }
 
 function genrelist() {
-    $cats = array();
-    $read = readCache("cats.cache", "1800");
+    $cats = [];
+    $read = cache_check('cats', 1800) ? cache_read('cats') : false;
 
-    if ($read == FALSE) {
-        $cats_res = sql_query("SELECT id, name FROM categories ORDER BY sort ASC");
-        if ($cats_res) {
-            while ($cats_row = mysqli_fetch_assoc($cats_res)) {
-                $cats[] = $cats_row;
-            }
-            ksort($cats);
-        }
-        $text = serialize($cats);
-        writeCache($text, "cats.cache");
-    } else {
-        $cats = unserialize($read);
+    if (is_array($read)) {
+        return $read;
     }
+
+    $cats_res = sql_query("SELECT id, name FROM categories ORDER BY sort ASC");
+    if ($cats_res) {
+        while ($cats_row = mysqli_fetch_assoc($cats_res)) {
+            $cats[] = $cats_row;
+        }
+        ksort($cats);
+    }
+
+    cache_write('cats', $cats);
     return $cats;
 }
 
@@ -1075,17 +1074,19 @@ function getRate($id,$what) {
 
 
 function show_news (){
-if (cache_check("news", 600))
-    $res = cache_read("news");
-else {
-$res = sql_query("SELECT id ,added, subject FROM news ORDER BY id DESC LIMIT 10") or sqlerr(__FILE__, __LINE__);
-$news_cache = array();
-    while ($cache_data = mysqli_fetch_array($res))
-        $news_cache[] = $cache_data;
+    $res = cache_check('news', 600) ? cache_read('news') : false;
 
-    cache_write("news", $news_cache);
-    $res = $news_cache;
+    if (!is_array($res)) {
+        $queryRes = sql_query("SELECT id, added, subject FROM news ORDER BY id DESC LIMIT 10") or sqlerr(__FILE__, __LINE__);
+        $news_cache = [];
+        while ($cache_data = mysqli_fetch_assoc($queryRes)) {
+            $news_cache[] = $cache_data;
+        }
+
+        cache_write('news', $news_cache);
+        $res = $news_cache;
     }
+
 foreach($res as $arr) 
 	{	
 	$newsid = $arr["id"];
@@ -1193,12 +1194,20 @@ function cat_name($id, $name = false)
 {
     global $mcache, $pic_base_url;
 
-    if (false === ($row = $mcache->get_value('cats_' . $id))) {
+    $cacheKey = 'cats_' . (int)$id;
+    $row = false;
+
+    if ($mcache && method_exists($mcache, 'get_value')) {
+        $row = $mcache->get_value($cacheKey);
+    }
+
+    if ($row === false) {
         $res = sql_query("SELECT * FROM categories WHERE id = " . (int)$id) or sqlerr(__FILE__, __LINE__);
         $row = mysqli_fetch_assoc($res);
-        if ($row) {
-            // Кэшируем на 1 час (3600 секунд)
-            $mcache->cache_value('cats_' . $id, $row, 3600);
+        if (is_array($row)) {
+            if ($mcache && method_exists($mcache, 'cache_value')) {
+                $mcache->cache_value($cacheKey, $row, 3600);
+            }
         } else {
             // Если категории нет — возврат пустой строки или "Неизвестно"
             return $name ? "Неизвестно" : "";
