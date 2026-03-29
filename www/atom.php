@@ -3,6 +3,9 @@
 require_once("include/bittorrent.php");
 require_once("include/functions_global.php");
 require_once("include/class/class.memchat.php");
+if (is_file(__DIR__ . "/include/class/jsend.class.php")) {
+    require_once(__DIR__ . "/include/class/jsend.class.php");
+}
 $logFile = __DIR__ . '/logs/chat.log';  // <--- добавь сюда путь к логу
 // Подключение к БД и gzip
 gzip();
@@ -42,6 +45,7 @@ if (!$connected) {
 
 $keep_messages = 25;
 $chat = new mc_chat($mc, '2', $keep_messages);
+$jSEND = class_exists('jSEND') ? new jSEND() : null;
 
 header("Content-Type: text/html; charset=utf-8");
 
@@ -64,14 +68,26 @@ if ($action === 'add') {
     chat_log("RAW input (hex): " . bin2hex($rawText));
     chat_log("RAW input (string): " . $rawText);
 
-    // Читаем текст как обычный UTF-8 POST без legacy jSEND
+    // По умолчанию читаем текст как обычный UTF-8 POST
     $decodedText = trim((string)$rawText);
     chat_log("After direct UTF-8 read: " . $decodedText);
 
-    // На всякий случай убираем некорректную UTF-8, если она прилетела
-    if (!mb_check_encoding($decodedText, 'UTF-8')) {
-        $decodedText = mb_convert_encoding($decodedText, 'UTF-8', 'UTF-8, Windows-1251, ISO-8859-1');
-        chat_log("After mb_convert_encoding fallback: " . $decodedText);
+    // Если пришёл старый jSEND-пакет с управляющими символами, пробуем декодировать legacy-формат
+    $looksLikeLegacyJsend = (bool)preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F]/', $rawText);
+    if ($looksLikeLegacyJsend && $jSEND) {
+        $legacyDecoded = $jSEND->getData($rawText);
+        if (is_string($legacyDecoded) && $legacyDecoded !== '') {
+            $decodedText = trim($legacyDecoded);
+            chat_log("After legacy jSEND decode: " . $decodedText);
+        }
+    }
+
+    // На всякий случай исправляем битую кодировку, если mbstring доступен
+    if (function_exists('mb_check_encoding') && !mb_check_encoding($decodedText, 'UTF-8')) {
+        if (function_exists('mb_convert_encoding')) {
+            $decodedText = mb_convert_encoding($decodedText, 'UTF-8', 'UTF-8, Windows-1251, ISO-8859-1');
+            chat_log("After mb_convert_encoding fallback: " . $decodedText);
+        }
     }
 
     // Удаляем управляющие символы (кроме перевода строки и таба)
@@ -79,7 +95,11 @@ if ($action === 'add') {
     chat_log("After removing control chars: " . $decodedText);
 
     // Ограничиваем длину сообщения
-    $decodedText = mb_substr($decodedText, 0, 500, 'UTF-8');
+    if (function_exists('mb_substr')) {
+        $decodedText = mb_substr($decodedText, 0, 500, 'UTF-8');
+    } else {
+        $decodedText = substr($decodedText, 0, 500);
+    }
     chat_log("After length limit (500 chars max): " . $decodedText);
 
     if ($decodedText === '') {
@@ -137,6 +157,7 @@ if ($action === 'add') {
                     {$values['message']}, {$values['time']})";
     sql_query($sql) or sqlerr(__FILE__, __LINE__);
     chat_log("Message inserted into DB.");
+    $mc->delete("chat_html_cache");
 }
 
 if ($action === 'delete') {
@@ -147,6 +168,7 @@ if ($action === 'delete') {
         $chat->purne($id);
         sql_query("DELETE FROM shoutbox WHERE date = $tid") or sqlerr(__FILE__, __LINE__);
         chat_log("Deleted message with date $tid and id $id.");
+        $mc->delete("chat_html_cache");
     } else {
         die("Нет прав на удаление сообщений.");
     }
@@ -209,6 +231,6 @@ foreach ($msg as $arr) {
 }
 
 $html .= "</table>";
-$mc->set("chat_html_cache", $html, 0); // кешируем на 3 секунды
+$mc->set("chat_html_cache", $html, 3); // кешируем на 3 секунды
 
 echo $html;
