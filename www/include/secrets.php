@@ -1,4 +1,6 @@
 <?php
+require_once(__DIR__ . '/class/class.memcached_stub.php');
+
 $mysql_host = "db";
 $mysql_user = "root";
 $mysql_pass = "root";

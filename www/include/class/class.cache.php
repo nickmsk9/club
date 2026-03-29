@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/class.memcached_stub.php');
+
 if (!defined('IN_TRACKER')) {
     // Защита от прямого доступа к файлу
     die('Hacking attempt!');
@@ -82,10 +84,7 @@ function cache_left($file, $time) {
     return max(0, $time - (time() - filemtime($path)));
 }
 
-// Проверка наличия расширения memcached
-if (!extension_loaded('memcached')) {
-    die('Memcached extension not loaded.');
-}
+// В локальной среде без расширения используем stub, чтобы код не падал.
 
 /**
  * Альтернативная запись файла в кэш (например, для HTML или JSON без сериализации)
