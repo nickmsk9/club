@@ -14,8 +14,11 @@ if($mysqli->connect_error) {
 $mysqli->set_charset($mysql_charset);
 
 // Подключение к Memcached внутри докер-сети (имя контейнера и стандартный порт 11211)
+$memcached_host = 'memcached';
+$memcached_port = 11211;
+
 $memcached = new Memcached();
-$memcached->addServer('animeclub-memcache', 11211);
+$memcached->addServer($memcached_host, $memcached_port);
 
 
 // Включение ошибок как можно раньше

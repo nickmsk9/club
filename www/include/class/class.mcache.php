@@ -45,11 +45,11 @@ class CACHE extends Memcached {
     function __construct() {
         require_once(__DIR__ . '/../secrets.php');
 
-        // Хост и порт Memcached из настроек
-        $host = isset($memcached_host) ? $memcached_host : 'localhost';
-        $port = isset($memcached_port) ? $memcached_port : 11211;
-
         parent::__construct();
+
+        // Хост и порт берём из общих настроек, чтобы не расходиться с docker-compose.
+        $host = $memcached_host ?? 'memcached';
+        $port = (int)($memcached_port ?? 11211);
 
         // Настройки производительности Memcached
         $this->setOption(self::OPT_COMPRESSION, true);
@@ -57,8 +57,15 @@ class CACHE extends Memcached {
         $this->setOption(self::OPT_CONNECT_TIMEOUT, 200);
         $this->setOption(self::OPT_RETRY_TIMEOUT, 1);
 
-        // Подключение к серверу и активация
-        $success = $this->addServer($host, $port);
+        // Не добавляем сервер повторно, если список уже инициализирован.
+        $serverList = $this->getServerList();
+        if (empty($serverList)) {
+            $this->addServer($host, $port);
+            $serverList = $this->getServerList();
+        }
+
+        // Активируем кэш только если сервер действительно зарегистрирован в клиенте.
+        $success = !empty($serverList);
         $this->isEnabled = $success ? 1 : 0;
     }
 
